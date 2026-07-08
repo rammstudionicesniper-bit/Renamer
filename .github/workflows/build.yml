@@ -1,0 +1,59 @@
+name: Build Windows EXE
+
+# 코드가 푸시될 때, 또는 GitHub 사이트에서 수동으로 실행할 때 윈도우용 exe 를 만든다.
+on:
+  push:
+    branches:
+      - Renamer
+      - claude/seqrenamer-windows-tool-kxhk8l
+    paths-ignore:
+      - "README.md"
+      - "**/*.md"
+  workflow_dispatch: {}   # Actions 탭에서 "Run workflow" 버튼으로 수동 실행 가능
+
+permissions:
+  contents: write          # "latest" 릴리스에 exe 를 올리기 위해 필요
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 3.11 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pyinstaller
+
+      - name: 테스트 (핵심 로직)
+        run: |
+          python -m pip install pytest
+          python -m pytest -q
+
+      - name: 단일 exe 빌드
+        run: pyinstaller --onefile --windowed --name SeqRenamer main.py
+
+      # (1) 언제나: Actions 실행 페이지에서 다운로드할 수 있는 아티팩트로 업로드
+      - name: exe 아티팩트 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: SeqRenamer-exe
+          path: dist/SeqRenamer.exe
+          if-no-files-found: error
+
+      # (2) 편의: 항상 최신 exe 를 받을 수 있는 "latest" 릴리스로도 게시
+      - name: latest 릴리스에 게시
+        if: github.ref == 'refs/heads/Renamer'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "최신 빌드 (SeqRenamer.exe)"
+          body: "연번 리네이머 최신 윈도우 실행 파일입니다. 아래 SeqRenamer.exe 를 내려받아 더블클릭하세요."
+          files: dist/SeqRenamer.exe
+          make_latest: "true"
