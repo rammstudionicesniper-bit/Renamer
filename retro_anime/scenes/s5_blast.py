@@ -9,7 +9,8 @@
   f14–27 순백 구체(청백 림, 투과광)가 돔처럼 솟아 팽창, 동심원 충격파 링이 지면을 질주,
          집중선, 빌딩이 날아가고(셀, 2코마) 구름에 구멍, 히어로 타워 상부가 부러져 넘어감
   f28    2차 서지 — 적색 단색, f29 반전(검은 구체 + 붉은 림), 응결 고리 구름, 방전 아크, 불티
-  f28–39 거대한 먼지 벽(뭉게 셀, 역광 림)이 도시를 휩쓸며 카메라 쪽으로, f36 전경 타워 붕괴
+  f28–39 거대한 먼지 벽(콜리플라워 뭉게 셀 3톤 + 백열/주황 역광 띠, 2코마)이 도시를 휩쓸며 카메라 쪽으로
+         솟아오름, f36 전경 타워 붕괴. 히어로 타워 창문은 충격파가 오며 칸칸이 꺼진다
   f40    충격파 도달 — 반전, f41 적색: 순백 빛 속 도시 실루엣을 '빛의 전선'이 중심부터 먹어 들어감
   f42–51 빛 속을 스치는 파편 스미어·먼지, 백열로 차오름
   f52–59 완전한 흰색 (HDR) → 타이틀로 하드 컷
@@ -109,6 +110,10 @@ HAZE_BLAST = np.array([0.55, 0.72, 1.0], f32)
 FIRE = np.array([1.9, 0.75, 0.25], f32)
 RIMC = np.array([0.22, 0.74, 1.25], f32)        # 구체 림 (포화된 청백, HDR — 필름 할레이션 후에도 푸르게)
 DUST_D = hexc("#24162a")
+WARM_HOT = np.array([2.4, 2.0, 1.55], f32)      # 역광 림 백열
+WARM_ORG = np.array([1.7, 0.68, 0.24], f32)     # 역광 림 주황
+WARM_LIT = np.array([1.9, 1.15, 0.60], f32)     # 셀 조각의 구체 쪽 하이라이트
+WIN_TINT = np.array([1.25, 0.80, 0.50], f32)    # 폭발광에 물든 창문
 DUST_M = hexc("#4a2a3c")
 
 
@@ -560,8 +565,27 @@ def _box_faces(x0, x1, z0, z1, y0, y1, d, seed, rim=True, win_min=9.0):
     return faces
 
 
+RIM_HOT = np.array([1.30, 1.12, 0.92], f32)      # 역광 림: 가장자리 백열 (청백 광원색에 곱함)
+RIM_ORG = np.array([1.25, 0.58, 0.24], f32)      #          안쪽 주황 띠
+
+
+def _rim_light(cv, x0, x1, y0, y1, col, ws, axis, sgn):
+    """역광 림 2톤: 얇은 백열 선 + (가까운 빌딩일수록 넓은) 주황 띠. axis=0 세로 림(옆면), 1 가로 림(윗면).
+    sgn 은 띠가 안쪽으로 넓어지는 방향."""
+    _add_rect_light(cv, x0, x1, y0, y1, col * RIM_HOT)
+    if ws > 1.05:
+        if axis == 0:
+            w = (x1 - x0) * (ws - 1.0) * 1.6
+            xa, xb = (x1, x1 + w) if sgn > 0 else (x0 - w, x0)
+            _add_rect_light(cv, xa, xb, y0, y1, col * RIM_ORG * 0.7)
+        else:
+            w = (y1 - y0) * (ws - 1.0) * 1.6
+            _add_rect_light(cv, x0, x1, y1, y1 + w, col * RIM_ORG * 0.7)
+
+
 def _draw_box(cv, x0, x1, z0, z1, y0, y1, d, seed, rim=True, win_min=9.0):
     """박스 하나를 안티앨리어스로 캔버스에 그린다 (근경/히어로용)."""
+    ws = float(np.clip(820.0 / max(z0, 1.0), 1.0, 3.2))        # 가까울수록 림이 넓다
     for fc in _box_faces(x0, x1, z0, z1, y0, y1, d, seed, rim, win_min):
         if fc["kind"] != 2:
             mm = _poly_mask_local(cv, [fc["poly"]])
@@ -572,12 +596,12 @@ def _draw_box(cv, x0, x1, z0, z1, y0, y1, d, seed, rim=True, win_min=9.0):
             if r is not None and r[0] == 3:
                 ex = r[1]
                 if r[2] > 0:
-                    _add_rect_light(cv, ex - 1.2, ex + 0.2, fc["poly"][1][1], fc["poly"][0][1], r[3])
+                    _rim_light(cv, ex - 1.2 * ws, ex + 0.2, fc["poly"][1][1], fc["poly"][0][1], r[3], ws, 0, -1)
                 else:
-                    _add_rect_light(cv, ex - 0.2, ex + 1.2, fc["poly"][1][1], fc["poly"][0][1], r[3])
+                    _rim_light(cv, ex - 0.2, ex + 1.2 * ws, fc["poly"][1][1], fc["poly"][0][1], r[3], ws, 0, 1)
             elif r is not None and r[0] == 2:
                 P = fc["poly"]
-                _add_rect_light(cv, P[3][0], P[2][0], r[1] - 0.4, r[1] + 1.2, r[3])
+                _rim_light(cv, P[3][0], P[2][0], r[1] - 0.4, r[1] + 1.2 * ws, r[3], ws, 1, 1)
             continue
         fx0, fy0 = fc["poly"][0]
         fx1, fy1 = fc["poly"][2]
@@ -594,7 +618,7 @@ def _draw_box(cv, x0, x1, z0, z1, y0, y1, d, seed, rim=True, win_min=9.0):
         cv.wp.append(fc["wp"])
         _put(cv, mm, _pack(cN, fc["cB"], cL), fc["z"], d, 2, len(cv.wp) - 1)
         if fc["rim"] is not None:
-            _add_rect_light(cv, fx0, fx1, fy0, fy0 + 1.7, fc["rim"][3])
+            _rim_light(cv, fx0, fx1, fy0, fy0 + 1.7 * ws, fc["rim"][3], ws, 1, 1)
 
 
 def _draw_boxes_id(cv, boxes):
@@ -917,7 +941,9 @@ def _hero_sprites():
         painted_texture(N, 0.07, seed=501, scale=1.5, stretch=6, angle=math.pi / 2, ox=97.0 * hi, oy=53.0 * hi)
         Wn = np.ascontiguousarray(cv.C[..., 9:12])
         _windows_vec(cv, Wn)
-        out.append(dict(name=name, box=(x0b, y0b, x1b, y1b), N=N,
+        br = np.random.default_rng(700 + hi).random((cv.h // 4 + 1, cv.w // 9 + 1)).astype(f32)
+        blk = np.repeat(np.repeat(br, 4, 0), 9, 1)[:cv.h, :cv.w]          # 층·칸 단위 소등 순서
+        out.append(dict(name=name, box=(x0b, y0b, x1b, y1b), N=N, blk=blk,
                         B=np.ascontiguousarray(cv.C[..., 3:6]),
                         L=np.ascontiguousarray(cv.C[..., 6:9]),
                         W=Wn, A=cv.A, Z=cv.Z, d=dmin, z=z0,
@@ -1049,109 +1075,161 @@ def _pre(ctx):
 # ---------------------------------------------------------------------------
 # 폭발 (f14–51)
 # ---------------------------------------------------------------------------
-def _wall_cols(Rw):
-    """반경 Rw 의 원통(먼지 벽)과 각 화면 열의 시선이 만나는 앞/뒤 깊이."""
-    dx = (np.arange(W, dtype=np.float64) + 0.5 - CX) / F
-    a = dx * dx + 1
-    disc = Z0 * Z0 - a * (Z0 * Z0 - Rw * Rw)
-    ok = disc > 0
-    sq = np.sqrt(np.maximum(disc, 0))
-    t1 = (Z0 - sq) / a
-    t2 = (Z0 + sq) / a
-    return dx, ok, t1, t2
+# 먼지 벽 로브 행: (반원당 덩어리 수, 중심 높이 비율, 반지름 비율, 바깥쪽 오프셋 비율)
+SMK_ROWS = (
+    (60, (0.42, 0.64), 0.36, 0.00),
+    (78, (0.18, 0.36), 0.29, 0.22),
+    (96, (-0.04, 0.10), 0.23, 0.44),
+)
+SMK_K = 9             # 덩어리당 원 (본체 1 + 혹 최대 8)
+# 역광(앞쪽 벽): 구체 쪽 윤곽만 초승달 띠로 빛나고 몸통은 중간 톤, 반대쪽은 짙은 그림자
+SMK_FRONT = dict(d_lit=0.15, g_hot=0.055, g_sh=0.34,
+                 lit_hot=np.array([2.40, 2.05, 1.65], f32), lit_far=np.array([1.45, 0.52, 0.16], f32),
+                 mid_top=np.array([0.165, 0.08, 0.17], f32), mid_bot=np.array([0.21, 0.085, 0.12], f32),
+                 sh=np.array([0.055, 0.022, 0.085], f32), ink=hexc("#12060c"))
+# 순광(구체 뒤쪽 벽): 멀고 엷다
+SMK_BACK = dict(d_lit=0.20, g_hot=0.07, g_sh=0.16,
+                lit_hot=np.array([0.98, 0.90, 1.05], f32), lit_far=np.array([0.90, 0.68, 0.72], f32),
+                mid_top=np.array([0.25, 0.19, 0.32], f32), mid_bot=np.array([0.28, 0.18, 0.26], f32),
+                sh=np.array([0.12, 0.075, 0.18], f32), ink=np.array([0.09, 0.05, 0.13], f32))
+FIRE_LIT = np.array([2.4, 1.0, 0.36], f32)
+FIRE_MID = np.array([0.48, 0.14, 0.09], f32)
+FIRE_SH = np.array([0.20, 0.05, 0.07], f32)
+SMK_HMAX = 170.0      # 덩어리 크기 상한용 벽 높이 (카메라 직전에서 공 몇 개로 화면을 덮지 않게)
+SMK_YMAX = 300.0      # 쌓이는 높이 상한 (카메라 직전에서 벽이 솟아올라 화면 아래를 덮는다)
 
 
-def _billows(sarc, h0, seed, lf2, row, near=1.0):
-    """뭉게구름 실루엣: 원 여러 개의 윗부분 합집합 → 둥근 스캘럽 윤곽.
-    반환: 열마다 (높이, 담당 원의 중심 s, 중심 높이, 반지름)."""
-    rng = np.random.default_rng([seed, row])
-    span = 2 * math.pi * 2400.0
-    base_r = float(np.clip(h0 * (0.62 if row == 0 else 0.40), 14.0, 48.0 if row == 0 else 34.0)) * near
-    n = int(span / (base_r * 0.9)) + 2
-    rj = base_r * rng.uniform(0.40, 1.0, n) ** 1.6 * np.where(rng.random(n) < 0.16, 1.9, 1.0)
-    sj = np.cumsum(rj * rng.uniform(0.7, 1.4, n)) - span / 2
-    cj = rng.uniform(0.10, 0.45, n) * h0 * (1.0 if row == 0 else 0.5)
-    ph = rng.uniform(0, 6.28, n)
-    rj = rj * (1 + 0.06 * np.sin(lf2 * 0.9 + ph))
-    cj = cj + lf2 * 0.004 * h0 * rng.uniform(0.5, 1.5, n)
-    dsq = rj[None, :] ** 2 - (sarc[:, None] - sj[None, :]) ** 2
-    hh = np.where(dsq > 0, cj[None, :] + np.sqrt(np.maximum(dsq, 0)), -1e9)
-    k = hh.argmax(1)
-    ar = np.arange(len(sarc))
-    return np.maximum(hh[ar, k], 0.0), sj[k], cj[k], rj[k]
+@lru_cache(maxsize=8)
+def _smoke_params(seed):
+    rows = []
+    for ri, (n, yr, rbase, off) in enumerate(SMK_ROWS):
+        rng = np.random.default_rng([seed, ri, 77])
+        u = (np.arange(n) + rng.uniform(0.0, 1.0, n)) / n
+        yc = rng.uniform(*yr, n)
+        rf = rbase * np.exp(rng.normal(0, 0.28, n))
+        plume = rng.random(n) < (0.14 if ri == 0 else 0.04)
+        rf = np.where(plume, rf * 1.3, rf)
+        yc = np.where(plume, yc + 0.10, yc)
+        rows.append(dict(u=u, yc=yc, rf=rf, off=off, ph=rng.uniform(0, 6.283, n),
+                         rise=rng.uniform(0.5, 1.5, n), nsub=rng.integers(3, SMK_K, n),
+                         sub=rng.uniform(0, 1, (n, SMK_K, 3)), lw=rng.uniform(0.8, 1.3, n)))
+    return rows
 
 
-def _draw_wall(img, Zf, Rw, h0, alpha, lf, seed, back=False, lit=1.0):
-    """충격파를 뒤따르는 먼지 벽(베이스 서지) — 원통과 시선의 교차를 열 단위로 계산."""
-    dx, ok, t1, t2 = _wall_cols(Rw)
-    t = t2 if back else t1
-    ok = ok & (t > 40)
-    if not ok.any() or alpha <= 0.01:
+def _smoke_wall(img, Zf, Rw, h0, alpha, lf, seed, scx, scy, sr, back=False, lit=1.0):
+    """충격파를 뒤따르는 먼지 벽 — 셀 애니 폭연 (2코마).
+    원통 위에 고정된 덩어리(본체 원 + 구체 쪽 혹 원들의 합집합 = 콜리플라워 실루엣)를
+    덩어리마다 4톤 면 ID 버퍼에 화가 순서로 그린다 (전부 cv2 C 루프):
+      잉크   = 광원 반대로 밀린 큰 원들 (그림자 쪽 선이 굵다)
+      밝은 띠 = 원들 그대로
+      중간 톤 = 광원 반대로 dl 밀고 dl 줄인 원들 → 구체 쪽 윤곽만 혹을 따라 굽이치는 초승달 띠가 남음
+      그림자  = 본체 원 안쪽, 광원 반대편에 접한 원
+    """
+    if alpha <= 0.01 or Rw <= 0:
         return
-    cols = np.nonzero(ok)[0]
-    c0, c1 = int(cols.min()), int(cols.max()) + 1
-    t = t[c0:c1]
-    X = dx[c0:c1] * t
-    sarc = np.arctan2(t - Z0, X) * Rw
     lf2 = (lf // 2) * 2
-    near = float(np.clip((Z0 - Rw) / 650.0, 0.3, 1.0)) if not back else 1.0
-    hA, sA, cA, rA = _billows(sarc, h0, seed, lf2, 0, near)
-    hB, sB, cB, rB = _billows(sarc, h0, seed, lf2, 1, near)
-    hA = np.maximum(hA, hB)
-    tt = np.where(ok[c0:c1], t, 1e7)
-    ytop = HZ + F * (HC - hA) / tt
-    ybot = HZ + F * HC / tt
-    ymin = int(max(0, math.floor(ytop.min()) - 2))
-    ymax = int(min(H, math.ceil(ybot.max()) + 2))
-    if ymax <= ymin:
+    P = SMK_BACK if back else SMK_FRONT
+    hy = min(h0, SMK_YMAX)
+    h0 = min(h0, SMK_HMAX)
+    params = _smoke_params(seed)
+    prims = []
+    for ri, p in enumerate(params):
+        Rr = Rw + (-1 if back else 1) * p["off"] * h0
+        th = math.pi * p["u"] if back else -math.pi + math.pi * p["u"]
+        X = Rr * np.cos(th)
+        Z = Z0 + Rr * np.sin(th)
+        Yc = (p["yc"] + 0.006 * p["rise"] * lf2) * hy
+        r = p["rf"] * h0 * (1 + 0.05 * np.sin(0.9 * lf2 + p["ph"]))
+        Zs = np.maximum(Z, 300.0)          # 카메라 직전: 더 가까워지지 않고 솟아오르기만 (투영용)
+        px = CX + F * X / Zs
+        py = HZ + F * (HC - Yc) / Zs
+        rp = np.minimum(F * r / Zs, 300.0)
+        ok = (Z > 45) & (px + 1.7 * rp > 0) & (px - 1.7 * rp < W) & (py + 1.7 * rp > 0) & \
+            (py - 1.7 * rp < H) & (rp > 0.8)
+        for i in np.nonzero(ok)[0]:
+            prims.append((float(Z[i]), ri, int(i), float(px[i]), float(py[i]), float(rp[i]), float(Yc[i])))
+    if not prims:
         return
-    yy = YY[ymin:ymax]
-    Y = HC + (HZ - yy) / F * tt[None, :]                 # 픽셀의 월드 높이
-    pxm = tt[None, :] / F                                  # 픽셀 하나의 월드 크기
-    covA = np.clip((hA[None, :] - Y) / pxm + 0.5, 0, 1) * np.clip(Y / pxm + 0.5, 0, 1)
-    zt = tt[None, :].astype(f32)
-    vis = covA * (Zf[ymin:ymax, c0:c1] > zt) * alpha
-    if vis.max() <= 0:
+    prims.sort(key=lambda q: -q[0])
+    nm = len(prims) + 1
+    pal = np.zeros((nm * 5, 3), f32)
+    zm = np.full(nm, 1e7, f32)
+    circs = []
+    for m, (Z, ri, i, px, py, rp, Yc) in enumerate(prims, 1):
+        p = params[ri]
+        ldx, ldy = scx - px, scy - 0.6 * sr - py         # 거대한 구체의 위쪽 절반에서 오는 빛
+        ln = math.hypot(ldx, ldy)
+        ldx, ldy = (0.0, -1.0) if ln < 1e-3 else (ldx / ln, ldy / ln)
+        base = math.atan2(ldy, ldx)
+        side = 1.0 if px > scx else -1.0
+        roll = 0.009 * lf2 * side * (-1 if back else 1)      # 혹이 윤곽을 따라 굴러간다 (호 안에서 순환)
+        cc = [(px, py, rp)]
+        if ri == 0 and rp > 4:                           # 윗줄 덩어리는 아래로 몸통을 이어 공중에 뜨지 않게
+            cc.append((px - ldx * 0.15 * rp, py + 0.72 * rp, 0.86 * rp))
+        if rp > 4:
+            nsub = int(p["nsub"][i]) + (3 if rp > 60 else 0)      # 가까운 큰 덩어리일수록 혹이 잘다
+            big = 1.0 if rp <= 60 else 0.85
+            for k in range(min(nsub, SMK_K - len(cc))):
+                s0, s1, s2 = p["sub"][i, k]
+                a = base + ((s0 + roll) % 1.0 - 0.5) * 3.8
+                d = rp * (0.80 + 0.22 * s1)
+                cc.append((px + d * math.cos(a), py + d * math.sin(a), rp * (0.20 + 0.22 * s2) * big))
+        lw = float(np.clip(rp * 0.04, 1.0, 6.5)) * float(p["lw"][i])
+        dlf = P["d_lit"] * (0.75 + 0.55 * float(p["sub"][i, -1, 0]))
+        circs.append((m, ldx, ldy, lw, dlf * rp, cc))
+        zm[m] = Z
+        # 덩어리 팔레트 (잉크, 밝은 띠, 중간, 그림자)
+        hf = float(np.clip(Yc / max(hy, 1.0), 0, 1))
+        near = math.exp(-max(math.hypot(px - scx, py - scy) - sr, 0) / (0.9 * sr + 260.0))
+        c_lit = (P["lit_far"] + (P["lit_hot"] - P["lit_far"]) * f32(0.2 * near)) * f32(lit ** 0.6)
+        c_hot = P["lit_hot"] * f32(lit ** 0.6)
+        c_mid = (P["mid_top"] * hf + P["mid_bot"] * (1 - hf)) * f32(0.75 + 0.25 * lit)
+        c_sh = P["sh"]
+        if not back and hf < 0.2:                       # 지면 가까이: 불길에 물든 덩어리
+            c_lit, c_mid, c_sh = FIRE_LIT * f32(lit ** 0.6), FIRE_MID, FIRE_SH
+        pal[5 * m - 4:5 * m + 1] = (P["ink"], c_hot, c_lit, c_mid, c_sh)
+    allc = np.array([c for (_, _, _, _, _, cc) in circs for c in cc])
+    ext = allc[:, 2] + 16
+    x0 = int(max(0, math.floor((allc[:, 0] - ext).min())))
+    x1 = int(min(W, math.ceil((allc[:, 0] + ext).max()) + 1))
+    y0 = int(max(0, math.floor((allc[:, 1] - ext).min())))
+    y1 = int(min(H, math.ceil((allc[:, 1] + ext).max()) + 1))
+    if x1 <= x0 or y1 <= y0:
         return
-    inB = np.clip((hB[None, :] - Y) / pxm + 0.5, 0, 1)
-    # 광원(구체)은 위·화면 중심 쪽 → 그림자 원은 아래·바깥으로 밀린다 → 위쪽 초승달 림
-    side = np.sign(sarc)[None, :]
-    def cres(s0, c0_, r0, h_top):
-        dsx = -side * 0.09 * r0[None, :]
-        dsq = r0[None, :] ** 2 - (sarc[None, :] - s0[None, :] - dsx) ** 2
-        hsh = c0_[None, :] - 0.13 * r0[None, :] + np.sqrt(np.maximum(dsq, 0))
-        hsh = np.where(dsq > 0, hsh, -1e9)
-        return np.clip((Y - hsh) / pxm + 0.5, 0, 1) * (Y < h_top[None, :])
-    rimA = cres(sA, cA, rA, hA) * (1 - inB)
-    rimB = cres(sB, cB, rB, hB) * inB
-    # 그림자 톤: 원 중심보다 아래·바깥쪽 (딱딱한 경계)
-    def shade(s0, c0_, r0):
-        return ((Y < c0_[None, :] + 0.10 * r0[None, :]) |
-                (side * (sarc[None, :] - s0[None, :]) > 0.55 * r0[None, :])).astype(f32)
-    shA = shade(sA, cA, rA) * (1 - inB)
-    shB = shade(sB, cB, rB) * inB
-    if not back:
-        body = np.array([0.22, 0.13, 0.18], f32) * (1 - inB[..., None]) + \
-            np.array([0.12, 0.07, 0.11], f32) * inB[..., None]
-        body = body * (1 - 0.45 * (shA + shB)[..., None])
-        hfrac = np.clip(Y / max(h0, 1.0), 0, 1)[..., None]
-        rimc = (np.array([0.80, 0.92, 1.10], f32) * hfrac + np.array([1.2, 0.62, 0.32], f32) * (1 - hfrac)) * lit
-        col = body + (rimA * 0.9 + rimB * 0.6)[..., None] * (rimc - body)
-        fire = np.clip(1 - Y / (0.30 * h0), 0, 1) ** 1.6
-        col = col + fire[..., None] * FIRE * (0.65 * lit)
-        lineA = np.clip(1.0 - np.abs(hA[None, :] - Y) / (1.1 * pxm), 0, 1)
-        lineB = np.clip(1.0 - np.abs(hB[None, :] - Y) / (0.9 * pxm), 0, 1) * (Y < hA[None, :] - pxm)
-        ln = np.maximum(lineA, lineB * 0.7)[..., None]
-        col = col * (1 - ln * 0.85) + hexc("#12060c") * ln * 0.85
-    else:
-        body = np.array([0.62, 0.52, 0.62], f32) * (0.55 * lit)
-        col = body * (1 - inB[..., None] * 0.18) * (1 - 0.35 * (shA + shB)[..., None])
-        col = col + (rimA + rimB)[..., None] * np.array([0.5, 0.55, 0.65], f32) * lit
-    reg = img[ymin:ymax, c0:c1]
-    reg *= 1 - vis[..., None]
-    reg += vis[..., None] * col
-    m = vis > 0.5
-    np.copyto(Zf[ymin:ymax, c0:c1], np.broadcast_to(zt, m.shape), where=m)
+    idb = np.zeros((y1 - y0, x1 - x0), np.int32)
+
+    def circ(cx_, cy_, rr, v):
+        if rr > 0.3:
+            cv2.circle(idb, (int(round((cx_ - x0) * 16)), int(round((cy_ - y0) * 16))), int(round(rr * 16)),
+                       int(v), -1, cv2.LINE_8, 4)
+
+    gs, gh = P["g_sh"], P["g_hot"]
+    for (m, lx, ly, lw, dlf, cc) in circs:
+        b = 5 * m
+        for (c0, c1, rr) in cc:                       # 잉크
+            circ(c0 - lx * lw * 0.7, c1 - ly * lw * 0.7, rr + lw, b - 4)
+        for (c0, c1, rr) in cc:                       # 백열 가장자리 (전체)
+            circ(c0, c1, rr, b - 3)
+        rp = cc[0][2]
+        for (c0, c1, rr) in cc:                       # 주황 띠: 광원 쪽에 폭 g_hot 의 백열 선을 남김
+            g = min(rp * gh, 0.2 * rr)
+            circ(c0 - lx * g * 0.5, c1 - ly * g * 0.5, rr - g * 0.5, b - 2)
+        for (c0, c1, rr) in cc:                       # 그림자: 광원 쪽에 폭 g_l (덩어리 기준) 의 밝은 띠를 남김
+            gl = min(dlf, 0.42 * rr)
+            circ(c0 - lx * gl * 0.5, c1 - ly * gl * 0.5, rr - gl * 0.5, b)
+        for (c0, c1, rr) in cc:                       # 중간 톤: 반대쪽에 폭 g_s 의 그림자 초승달을 남김
+            gl, g2 = min(dlf, 0.42 * rr), rr * gs
+            d = (g2 - gl) * 0.5
+            circ(c0 + lx * d, c1 + ly * d, rr - (gl + g2) * 0.5, b - 1)
+    col = pal[idb]
+    zt = zm[(idb + 4) // 5]
+    vis = ((idb > 0) & (Zf[y0:y1, x0:x1] > zt)).astype(f32) * f32(alpha)
+    pc = cv2.GaussianBlur(col * vis[..., None], (0, 0), 0.6)
+    vb = cv2.GaussianBlur(vis, (0, 0), 0.6)
+    reg = img[y0:y1, x0:x1]
+    reg *= 1 - vb[..., None]
+    reg += pc
+    np.copyto(Zf[y0:y1, x0:x1], zt, where=vis > 0.5)
 
 
 def _puff(img, cx, cy, r, ldir, body, rimc, lw):
@@ -1341,7 +1419,8 @@ def _debris(img, lf, R, Rd, scx, scy):
         if rp < 5:
                     fill_poly(img, poly, B_SIL)
         else:
-            _cel_chunk(img, poly, ldir, B_SIL * 1.4, RIM * 1.1, max(1.0, min(3.0, rp * 0.12)), sd)
+            _cel_chunk(img, poly, ldir, B_SIL * 1.4, WARM_LIT if sd & 1 else RIM * 1.1,
+                       max(1.0, min(3.0, rp * 0.12)), sd)
 
 
 def _lean_buildings(img, lf, R, Rd, scx, scy, Zf):
@@ -1376,7 +1455,7 @@ def _lean_buildings(img, lf, R, Rd, scx, scy, Zf):
         poly = poly @ np.array([[c, s], [-s, c]]) + piv + (sgn * age * 3.0, age * 1.5)
         ldir = np.array([scx - xc, scy - piv[1]])
         ldir /= np.linalg.norm(ldir) + 1e-6
-        _cel_chunk(img, poly, ldir, B_SIL * 1.3, RIM * 0.9, max(1.2, min(3.5, hh * 0.015)), int(i))
+        _cel_chunk(img, poly, ldir, B_SIL * 1.3, WARM_LIT, max(1.2, min(3.5, hh * 0.015)), int(i))
 
 
 def _sphere(img, Zf, Df, R, scx, scy, r, lf, I):
@@ -1397,8 +1476,8 @@ def _sphere(img, Zf, Df, R, scx, scy, r, lf, I):
     # 순백 코어 → 포화된 청백 림 (셀 2톤처럼 경계가 비교적 또렷) → 가장자리 밝은 선
     t_rim = smoothstep(0.66, 0.84, rho)[..., None]
     col = CORE * (1 - t_rim) + RIMC * t_rim
-    edge = np.exp(-((rho - 0.975) / 0.012) ** 2)[..., None]
-    col = col + edge * np.array([0.35, 0.55, 0.6], f32)
+    edge = np.exp(-((rho - 0.972) / 0.016) ** 2)[..., None]
+    col = col + edge * np.array([0.9, 1.15, 1.25], f32)
     # 림 속 에너지 결 (2코마로 꿈틀)
     reg = img[y0:y1, x0:x1]
     reg *= 1 - vis[..., None]
@@ -1579,6 +1658,10 @@ def _blast(ctx):
     for hs in heroes:
         fh = hit_frame(hs["d"])
         col = hs["B"] + hs["L"] * I
+        # 창문: 폭발광에 물들었다가 충격파가 오며 칸칸이 꺼진다 (2코마)
+        thr = float(clamp(((lf // 2) * 2 - T_BANG + 2) / max(fh + 6 - T_BANG, 1.0)))
+        if thr < 1:
+            col = col + hs["W"] * ((hs["blk"] > thr) * 1.3)[..., None] * WIN_TINT
         if lf < fh:
             _composite_hero(img, Zf, Df, hs, col)
             hero_vis.append(None)
@@ -1616,13 +1699,14 @@ def _blast(ctx):
             img += fl[..., None] * (RIM * 0.6)
 
     late = lf >= 42                 # 빛의 범람이 거의 다 덮는 구간: 보이지 않는 레이어 생략
+    walls = lf < 40                 # 충격파 도달(f40~): 먼지 벽은 빛 속에 묻힌다
     # --- 먼 쪽 먼지 벽 (구체 뒤)
-    for k in (() if late else (0, 2)):
-        Rk = ring_R(k, lf)
+    for k in ((0, 2) if walls else ()):
+        Rk = ring_R(k, (lf // 2) * 2)          # 작화(먼지 벽)는 2코마
         if Rk is None:
             continue
         al = math.exp(-max(lf - RINGS[k][0] - RINGS[k][3], 0) / 3.0)
-        _draw_wall(img, Zf, Rk - 35, _wall_h(k, Rk), al, lf, 3 + k, back=True, lit=I / 2.4)
+        _smoke_wall(img, Zf, Rk - 35, _wall_h(k, Rk), al, lf, 3 + k, scx, scy, r, back=True, lit=I / 2.4)
 
     # --- 구체 (+ 응결 고리 뒤쪽 호)
     _vapor_ring(img, lf, scx, scy, r, I, front=False)
@@ -1644,12 +1728,12 @@ def _blast(ctx):
             _hero_break(img, Zf, Df, item, lf, scx, scy, I)
 
     # --- 앞쪽 먼지 벽
-    for k in (() if late else (0, 2)):
-        Rk = ring_R(k, lf)
+    for k in ((0, 2) if walls else ()):
+        Rk = ring_R(k, (lf // 2) * 2)          # 작화(먼지 벽)는 2코마
         if Rk is None:
             continue
         al = math.exp(-max(lf - RINGS[k][0] - RINGS[k][3], 0) / 3.0)
-        _draw_wall(img, Zf, Rk - 35, _wall_h(k, Rk), al, lf, 3 + k, back=False, lit=I / 2.4)
+        _smoke_wall(img, Zf, Rk - 35, _wall_h(k, Rk), al, lf, 3 + k, scx, scy, r, back=False, lit=I / 2.4)
 
     # --- 파편 / 젖혀지는 빌딩
     if not late:
@@ -1723,11 +1807,13 @@ def _hero_break(img, Zf, Df, item, lf, scx, scy, I):
     reg += warped[..., :3]
     reg *= 1 - ring[..., None] * 0.9
     reg += ring[..., None] * INK * 0.9
-    # 광원 쪽 림 (셀 하이라이트)
-    dxs = -(scx - hs["xc"]) / abs(scx - hs["xc"] + 1e-3) * 4
-    sh = cv2.warpAffine(a, np.float32([[1, 0, dxs], [0, 1, 4]]), (bx1 - bx0, by1 - by0))
-    rimm = np.clip(a - sh, 0, 1)
-    reg += rimm[..., None] * RIM * 1.6
+    # 광원(구체) 쪽 역광 림 2톤: 백열 선 + 주황 띠 (셀 하이라이트)
+    sx_ = -(scx - hs["xc"]) / abs(scx - hs["xc"] + 1e-3)
+    sh1 = cv2.warpAffine(a, np.float32([[1, 0, sx_ * 2.5], [0, 1, 2.5]]), (bx1 - bx0, by1 - by0))
+    sh2 = cv2.warpAffine(a, np.float32([[1, 0, sx_ * 9.0], [0, 1, 8.0]]), (bx1 - bx0, by1 - by0))
+    hot = np.clip(a - sh1, 0, 1)
+    org = np.clip(a - sh2 - hot, 0, 1)
+    reg += hot[..., None] * WARM_HOT + org[..., None] * WARM_ORG
 
 
 # ---------------------------------------------------------------------------

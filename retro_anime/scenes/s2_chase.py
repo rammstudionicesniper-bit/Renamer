@@ -327,44 +327,55 @@ FW_C = (290.0, 132.0)
 RW_C = (-290.0, 132.0)
 R_TYRE = 132.0
 R_DISC = 98.0
-
-FAIRING = [(458, 298), (448, 318), (418, 338), (372, 356), (330, 370), (250, 388), (170, 402),
-           (90, 410), (10, 404), (-50, 386), (-80, 376), (-200, 370), (-240, 378), (-300, 398),
-           (-360, 420), (-410, 431), (-440, 427), (-454, 411), (-450, 390), (-416, 377), (-360, 359),
-           (-300, 336), (-250, 312), (-205, 285), (-175, 250), (-150, 205), (-125, 162), (-80, 130),
-           (20, 118), (110, 124), (160, 146), (185, 182), (196, 228), (214, 266), (254, 290),
-           (310, 300), (370, 298), (420, 290), (450, 290)]
-FAIR_SHADE = [(462, 296), (380, 318), (260, 330), (120, 336), (-40, 330), (-180, 332), (-300, 350),
-              (-420, 384), (-470, 396), (-470, 290), (-200, 60), (200, 60), (480, 200)]
-FAIR_HI = [[(446, 320), (410, 340), (362, 357), (334, 366), (338, 374), (366, 366), (414, 349), (452, 326)],
-           [(170, 396), (90, 405), (20, 400), (90, 399), (170, 390)],
-           [(-298, 401), (-360, 423), (-410, 433), (-406, 425), (-360, 415), (-296, 394)]]
-STRIPE = [(452, 310), (360, 334), (240, 348), (100, 354), (-40, 350), (-180, 352), (-300, 372),
-          (-432, 404)]
-SCREEN = [(330, 370), (312, 410), (284, 440), (240, 456), (208, 450), (200, 402), (250, 388)]
-SCREEN_HI = [(322, 377), (304, 412), (312, 410), (328, 378)]
-SEAT = [(-50, 386), (-80, 399), (-212, 395), (-252, 380), (-200, 369), (-80, 375)]
-COWL_LOW = [(196, 204), (166, 108), (-70, 98), (-152, 150), (-150, 214), (40, 228)]
-SWINGARM = [(-290, 150), (-290, 114), (-118, 136), (-110, 176)]
+FRAME_C = hexc("#8c92ae")
+FRAME_SH = hexc("#454a64")
+GOLD = hexc("#d9a441")
+GOLD_SH = hexc("#7a4a1c")
+PANTS_SH = hexc("#11131f")
+# 메인 카울 (하프 페어링 + 탱크 + 시트 카울). 노즈 → 윗선 → 테일 → 아랫선. 엔진부는 드러난다.
+BODY = [(472, 300), (458, 322), (426, 344), (384, 362), (330, 378), (262, 392), (205, 404),
+        (176, 420), (132, 440), (72, 451), (12, 445), (-34, 430), (-62, 410), (-100, 400), (-160, 398),
+        (-214, 402), (-262, 414), (-330, 428), (-394, 438), (-436, 443), (-458, 433), (-454, 412),
+        (-420, 400), (-358, 386), (-292, 362), (-242, 334), (-212, 306), (-160, 300), (-100, 318),
+        (-40, 332), (40, 334), (108, 326), (168, 292), (216, 262), (256, 274), (310, 282), (370, 290),
+        (430, 290), (468, 292)]
+BODY_SHADE = [(500, 304), (400, 312), (300, 324), (205, 348), (150, 374), (80, 382), (0, 380), (-80, 374),
+              (-200, 370), (-300, 390), (-400, 412), (-500, 430), (-500, 80), (500, 80)]
+BODY_HI = [[(452, 322), (420, 342), (380, 358), (374, 352), (414, 337), (446, 318)],
+           [(170, 424), (128, 443), (70, 454), (14, 448), (62, 445), (122, 435)],
+           [(-266, 417), (-332, 431), (-396, 441), (-432, 446), (-396, 435), (-332, 423)]]
+SCREEN = [(330, 378), (318, 412), (292, 442), (248, 460), (212, 454), (205, 404), (262, 392)]
+SCREEN_HI = [(322, 384), (306, 414), (314, 412), (328, 384)]
+SEAT = [(-62, 410), (-100, 418), (-170, 418), (-222, 424), (-244, 414), (-212, 398), (-100, 396)]
+CRANK = [(-150, 190), (-138, 140), (-100, 108), (-20, 96), (80, 100), (140, 126), (166, 170), (160, 214),
+         (120, 240), (-60, 246), (-130, 232)]
+CYL = [(10, 240), (132, 234), (190, 318), (70, 336)]
+FRAME = [(236, 360), (168, 348), (-60, 324), (-150, 308), (-188, 262), (-188, 150), (-148, 146),
+         (-150, 236), (-122, 280), (-50, 298), (170, 320), (230, 334)]
+SWINGARM = [(-302, 150), (-302, 114), (-160, 126), (-136, 150), (-150, 180)]
 EXHAUST = [(-160, 178), (-372, 258), (-380, 234), (-170, 152)]
-FORK = [(282, 125), (300, 135), (262, 262), (240, 254)]
-TAIL_LAMP = [(-456, 410), (-452, 389), (-441, 390), (-444, 411)]
-SIDE_LAMP = [(-436, 417), (-362, 413), (-360, 406), (-432, 408)]
-HEAD_LAMP = [(461, 304), (449, 314), (408, 312), (422, 302)]
-PEG = [(-152, 186), (-104, 186), (-104, 172), (-152, 172)]
+HEAD_LAMP = [(468, 302), (456, 320), (414, 322), (426, 302)]
+TAIL_LAMP = [(-458, 433), (-454, 412), (-443, 413), (-447, 434)]
+SIDE_LAMP = [(-448, 410), (-390, 399), (-388, 392), (-444, 402)]
+PEG = [(-86, 222), (-40, 222), (-40, 208), (-86, 208)]
+TAIL_UV = (-451, 423)          # 테일램프 중심 (트레일 기준점)
 
-# 라이더 포즈: 0 = 턱(질주), 1 = 정지·한발 짚기
-TORSO = {
-    0: [(-215, 380), (-222, 412), (-160, 445), (-80, 470), (-10, 485), (40, 482), (75, 465),
-        (70, 430), (10, 410), (-80, 400), (-150, 384)],
-    1: [(-205, 380), (-222, 415), (-190, 470), (-120, 525), (-50, 570), (10, 585), (55, 575),
-        (55, 540), (0, 505), (-70, 450), (-130, 392)],
+# 라이더 스켈레톤 키포즈 (로컬 u,v). 팔다리 길이는 IK 로 유지.
+L_THIGH, L_SHIN, L_UARM, L_FARM = 194.0, 188.0, 124.0, 118.0
+RIDER = {
+    # 레이싱 턱: 엉덩이는 시트, 상체 ~33° 앞으로, 헬멧은 들고 정면 주시, 팔꿈치 굽혀 클립온, 무릎은 탱크에
+    "tuck": dict(hip=(-134, 448), sh=(30, 552), head=(104, 602), wr=(214, 436), ank=(-92, 238),
+                 toe=(-28, 214), tilt=0.10),
+    # 슬라이드: 몸을 낮추고 안쪽으로 체중 이동 (먼 쪽 다리는 노면으로 뻗음)
+    "slide": dict(hip=(-128, 444), sh=(26, 538), head=(102, 590), wr=(214, 436), ank=(-92, 238),
+                  toe=(-28, 214), tilt=0.20),
+    # 정지: 상체를 세우고 가까운 발을 노면에 짚음
+    "stop": dict(hip=(-104, 444), sh=(16, 590), head=(52, 652), wr=(216, 438), ank=(-34, 44),
+                 toe=(36, 22), tilt=-0.05),
 }
-HELMET_C = {0: (102, 486, 0.22), 1: (74, 626, -0.08)}       # (u, v, 기울기 rad)
-LEG = {0: [(-160, 395), (20, 312), (-112, 196), (-52, 178)],   # 엉덩이, 무릎, 발목, 발끝
-       1: [(-140, 395), (-60, 225), (-25, 45), (40, 15)]}
-ARM = {0: [(25, 462), (95, 372), (205, 410)],                  # 어깨, 팔꿈치, 손목
-       1: [(20, 555), (115, 480), (205, 410)]}
+# 먼 쪽(안쪽) 다리 — 기울기 보정 전 좌표 (u, v_upright, w)
+FAR_LEG = {"peg": [(-92, 238, -100), (-28, 214, -100)],
+           "out": [(20, 30, -280), (88, 4, -290)]}
 HELMET = [(-62, 0), (-55, 35), (-25, 58), (15, 60), (48, 42), (66, 14), (70, -12), (62, -38),
           (40, -52), (0, -56), (-35, -48), (-58, -28)]
 VISOR = {0: [(28, 50), (55, 32), (68, 8), (68, -16), (56, -24), (30, -18), (18, 8), (16, 34)],
@@ -373,8 +384,51 @@ VISOR_HI = {0: [(34, 46), (58, 26), (62, 18), (32, 38)],
             1: [(-8, 42), (50, 38), (52, 30), (-10, 34)]}
 
 
-def _wheel(img, P3, cxy, spin, speed, seed, sil, boil, rim_dir, wn=40.0, wf=-40.0):
-    """디스크 휠: 압출 타이어 + 디스크 커버 + 허브 + 슬롯(고속이면 동심원 스피드 아크)."""
+def _ik(p0, p2, l1, l2, bend):
+    """2본 IK: p0→(관절)→p2. bend=+1 이면 p0→p2 방향의 왼쪽(반시계 법선)으로 꺾임. (관절, 보정된 끝점)."""
+    p0, p2 = np.asarray(p0, np.float64), np.asarray(p2, np.float64)
+    d = p2 - p0
+    L = float(np.hypot(*d)) + 1e-9
+    dh = d / L
+    Lc = min(max(L, abs(l1 - l2) + 1.0), l1 + l2 - 0.5)
+    p2 = p0 + dh * Lc
+    a = (l1 * l1 - l2 * l2 + Lc * Lc) / (2 * Lc)
+    hh = math.sqrt(max(l1 * l1 - a * a, 0.0))
+    n = np.array([-dh[1], dh[0]])
+    return p0 + dh * a + n * hh * bend, p2
+
+
+def _torso_pts(hip, sh, R=52.0):
+    """사이드 뷰 상체(재킷) 윤곽: 엉덩이→등→어깨→가슴→배. n 은 등 쪽."""
+    d = sh - hip
+    L = float(np.hypot(*d)) + 1e-9
+    dh = d / L
+    n = np.array([-dh[1], dh[0]])
+    prof = [(-0.22, 0.30), (-0.18, 0.78), (0.04, 1.02), (0.30, 0.92), (0.52, 0.86), (0.78, 1.04),
+            (0.98, 0.88), (1.10, 0.42), (1.12, -0.24), (1.00, -0.84), (0.74, -0.96), (0.46, -0.80),
+            (0.20, -0.84), (0.02, -0.96), (-0.16, -0.62)]
+    tp = lambda a, c: hip + dh * a * L + n * c * R
+    return np.array([tp(a, c) for a, c in prof]), tp, dh, n
+
+
+def _lift(P, p0, p1, w0, w1):
+    """2D 다각형에 팔다리 축(p0→p1)을 따라 보간한 w 를 붙인다."""
+    P = np.asarray(P, np.float64)
+    p0, p1 = np.asarray(p0, np.float64), np.asarray(p1, np.float64)
+    d = p1 - p0
+    t = np.clip(((P - p0) @ d) / (d @ d + 1e-9), 0, 1)
+    return np.c_[P, w0 + (w1 - w0) * t]
+
+
+def _rider_skel(pose, slide):
+    a = {k: lerp_pts(RIDER["tuck"][k], RIDER["slide"][k], slide) if k != "tilt" else
+         lerp(RIDER["tuck"][k], RIDER["slide"][k], slide) for k in RIDER["tuck"]}
+    return {k: (lerp_pts(a[k], RIDER["stop"][k], pose) if k != "tilt" else lerp(a[k], RIDER["stop"][k], pose))
+            for k in a}
+
+
+def _wheel(img, P3, cxy, spin, speed, seed, sil, boil, rim_dir, wn=40.0, wf=-40.0, rotor=False):
+    """디스크 휠: 압출 타이어 + 디스크 커버 + 허브 + 슬롯(고속이면 동심원 스피드 아크) (+ 브레이크 로터)."""
     cx, cy = cxy
     tyre = circ(cx, cy, R_TYRE, 44)[::-1]          # 반시계(v 위 기준)
     extrude(img, P3, tyre, wf, wn, TYRE, hexc("#3a3848"), TYRE, hexc("#26242f"), seed=seed,
@@ -387,11 +441,13 @@ def _wheel(img, P3, cxy, spin, speed, seed, sil, boil, rim_dir, wn=40.0, wf=-40.
         hi=DARK_HI * 1.15, hi_P=P3(hi, seed + 4, 0), line_w=2.6)
     if speed > 0.35:
         for i, rr in enumerate((34, 52, 70, 86)):
+            if rotor and rr > 40:
+                continue
             a0 = spin * 0.37 + i * 1.7
             arc = np.linspace(a0, a0 + 2.6, 18)
             pts = np.c_[cx + rr * np.cos(arc), cy + rr * np.sin(arc), np.full(18, wd)]
             ink(img, P3(pts, 0, 0), 2.4, mix(DISC, (0.8, 0.82, 0.95), 0.55), (0.4, 0.4), alpha=0.85)
-    else:
+    elif not rotor:
         for k in range(3):
             a = spin + k * 2 * np.pi / 3
             arc = np.linspace(a, a + 0.62, 8)
@@ -399,11 +455,39 @@ def _wheel(img, P3, cxy, spin, speed, seed, sil, boil, rim_dir, wn=40.0, wf=-40.
                          np.c_[cx + 76 * np.cos(arc[::-1]), cy + 76 * np.sin(arc[::-1])]]
             cel(img, P3(np.c_[slot, np.full(len(slot), wd)], seed + 10 + k, boil * 0.5), DISC_SH,
                 line_w=1.6)
-    ring = np.c_[circ(cx, cy, 82, 40), np.full(40, wd)]
+    ring = np.c_[circ(cx, cy, 82 if not rotor else 90, 40), np.full(40, wd)]
     ink(img, P3(ring, seed + 6, boil * 0.5), 3.0, RED * 0.9, (0, 0), closed=True)
-    hub = np.c_[circ(cx, cy, 25, 20), np.full(20, wd)]
+    if rotor:
+        # 드릴드 브레이크 로터 (강철, 셀 셰이딩 + 스펙큘러) + 캘리퍼
+        wr_ = wn + 8
+        ro = np.c_[circ(cx, cy, 76, 44), np.full(44, wr_)]
+        rin = np.c_[circ(cx, cy, 50, 32)[::-1], np.full(32, wr_)]
+        rm = P3(np.r_[ro, ro[:1], rin, rin[:1]], seed + 30, boil * 0.5)
+        cel(img, rm, hexc("#a9aec4"), shade=hexc("#5c6078"),
+            shade_P=P3(np.c_[circ(cx + 30, cy - 40, 80, 24), np.full(24, wr_)], 0, 0), line_w=2.2,
+            closed=True)
+        if speed < 0.5:
+            for kk in range(10):
+                a = spin + kk * 2 * np.pi / 10
+                hc = P3(np.c_[[cx + 63 * math.cos(a)], [cy + 63 * math.sin(a)], [wr_]], 0, 0)[0]
+                poly_fill(img, circ(hc[0], hc[1], 4.2, 10), DARK_SH)
+        else:
+            for kk in range(2):
+                a0 = spin * 0.37 + kk * 3.1
+                arc = np.linspace(a0, a0 + 1.9, 16)
+                pts = np.c_[cx + 63 * np.cos(arc), cy + 63 * np.sin(arc), np.full(16, wr_)]
+                ink(img, P3(pts, 0, 0), 3.0, hexc("#4a4e66"), (0.4, 0.4), alpha=0.8)
+        spec = np.c_[cx + 70 * np.cos(np.linspace(2.0, 2.7, 6)), cy + 70 * np.sin(np.linspace(2.0, 2.7, 6)),
+                     np.full(6, wr_ + 1)]
+        ink(img, P3(spec, 0, 0), 3.2, WHITE * 1.2, (0.4, 0.4))
+        cal = np.c_[ellip(cx - 58, cy + 46, 34, 20, -0.7, 20), np.full(20, wr_ + 6)]
+        cel(img, P3(cal, seed + 31, boil * 0.6), GOLD, shade=GOLD_SH,
+            shade_P=P3(np.c_[ellip(cx - 50, cy + 30, 34, 16, -0.7, 16), np.full(16, wr_ + 6)], 0, 0),
+            line_w=2.4)
+    hub = np.c_[circ(cx, cy, 25, 20), np.full(20, wd + (14 if rotor else 0))]
     cel(img, P3(hub, seed + 5, 0), RED, shade=RED_SH,
-        shade_P=P3(np.c_[circ(cx + 10, cy - 10, 23, 16), np.full(16, wd)], 0, 0), line_w=2.2)
+        shade_P=P3(np.c_[circ(cx + 10, cy - 10, 23, 16), np.full(16, wd + (14 if rotor else 0))], 0, 0),
+        line_w=2.2)
 
 
 @lru_cache(maxsize=1)
@@ -433,8 +517,20 @@ def _decal(img, rgb, a, quad):
     img[y0:y1, x0:x1] = img[y0:y1, x0:x1] * (1 - al) + r[..., :3]
 
 
+def _limb_cel(img, P3, p0, p1, w0, w1, r0, r1, bulge, side, col, shade, seed, boil, sil, rim=None,
+              rim_dir=(-0.45, -1.0), line_w=3.6, sh_off=(4, -14)):
+    """팔다리 한 마디 셀 (축을 따라 w 보간) + 딱딱한 그림자 톤."""
+    p0, p1 = np.asarray(p0, np.float64), np.asarray(p1, np.float64)
+    S = limb(p0, p1, r0, r1, bulge=bulge, side=side)
+    so = np.asarray(sh_off, np.float64)
+    SS = limb(p0 + so, p1 + so, r0 * 0.9, r1 * 0.9, 0)
+    cel(img, P3(_lift(S, p0, p1, w0, w1), seed, boil), col, shade=shade,
+        shade_P=P3(_lift(SS, p0, p1, w0, w1), seed + 1, boil * 0.5) if shade is not None else None,
+        rim=rim, rim_dir=rim_dir, rim_w=3.5, line_w=line_w, sil=sil)
+
+
 def bike_side(img, light, proj, pose=0.0, look=0.0, seed=0, spin=0.0, speed=1.0, sil=None,
-              boil=1.1, rim_dir=(-0.45, -1.0), rim=None, glint=0.0):
+              boil=1.1, rim_dir=(-0.45, -1.0), rim=None, glint=0.0, slide=0.0, lean=0.0):
     """사이드 뷰 바이크+라이더. proj: (N,3) 로컬(u,v,w) → (N,2) 화면. 테일램프 화면 좌표 반환."""
     rim = CYAN * 1.15 if rim is None else rim
     base_seed = seed * 131
@@ -451,19 +547,94 @@ def bike_side(img, light, proj, pose=0.0, look=0.0, seed=0, spin=0.0, speed=1.0,
         return P3(np.c_[pts, np.full(len(pts), float(w))], s, b)
 
     k = float(clamp(pose))
-    # --- 뒤쪽 레이어 (먼 쪽 팔)
-    arm = lerp_pts(ARM[0], ARM[1], k)
-    sh_, el, wr = arm
-    cel(img, P2(capsule(sh_ + (10, 4), el + (16, 6), 30, 24, 8), -110, 60), JACKET_SH, line_w=3.0, sil=sil)
-    cel(img, P2(capsule(el + (16, 6), wr + (14, 4), 23, 19, 8), -110, 61), JACKET_SH, line_w=3.0, sil=sil)
-    cel(img, P2(SWINGARM, -20, 1), DARK, rim=DARK_HI, rim_dir=rim_dir, rim_w=3, line_w=2.8, sil=sil)
+    sk = _rider_skel(k, float(clamp(slide)))
+    hip, sh_, hd, wr0, ank0, toe0 = (np.asarray(sk[n_], np.float64) for n_ in ("hip", "sh", "head", "wr", "ank", "toe"))
+    el, wr = _ik(sh_, wr0, L_UARM, L_FARM, -1)
+
+    # --- 뒤쪽 레이어: 먼 쪽 팔 / 먼 쪽(안쪽) 다리
+    _limb_cel(img, P3, sh_, el, -70, -84, 30, 24, 6, -1, JACKET_SH, None, 60, boil, sil, line_w=3.0)
+    _limb_cel(img, P3, el, wr, -84, -92, 24, 19, 5, 1, JACKET_SH, None, 62, boil, sil, line_w=3.0)
+    cl_, sl_ = math.cos(lean), math.sin(lean)
+    ks = float(clamp(slide)) * (1 - k)
+
+    def unlean(p):          # (u, v_upright, w_upright) → 로컬
+        u, v1, w1 = p
+        return np.array([u, v1 * cl_ - w1 * sl_, w1 * cl_ + v1 * sl_])
+
+    fa = unlean(lerp_pts(FAR_LEG["peg"][0], FAR_LEG["out"][0], ks))
+    ft = unlean(lerp_pts(FAR_LEG["peg"][1], FAR_LEG["out"][1], ks))
+    fh = np.array([hip[0] + 8, hip[1], -70.0])
+    fk2, fa2 = _ik(fh[:2], fa[:2], L_THIGH, L_SHIN, 1)
+    fkw = (fh[2] + fa[2]) * 0.5
+    _limb_cel(img, P3, fh[:2], fk2, fh[2], fkw, 42, 32, 8, 1, PANTS_SH, None, 64, boil, sil, line_w=3.2)
+    _limb_cel(img, P3, fk2, fa2, fkw, fa[2], 31, 21, 8, 1, PANTS_SH, None, 66, boil, sil, line_w=3.2)
+    if ks > 0.05:
+        bt = np.c_[_lift(limb(fa2, ft[:2], 26, 18, 0), fa2, ft[:2], fa[2], ft[2])]
+        cel(img, P3(bt, 68, boil), BOOT, hi=RED, hi_P=P3(_lift(limb(fa2 + (0, 10), ft[:2] + (0, 6), 12, 8, 0),
+                                                              fa2, ft[:2], fa[2], ft[2]), 0, 0),
+            line_w=3.2, sil=sil)
+
+    # --- 기계부 (휠 / 엔진 / 프레임 / 스윙암 / 체인)
     _wheel(img, P3, RW_C, spin, speed, 200, sil, boil, rim_dir)
-    _wheel(img, P3, FW_C, spin, speed, 300, sil, boil, rim_dir)
-    cel(img, P2(FORK, 30, 3), DARK, hi=DARK_HI,
-        hi_P=P2([(292, 128), (300, 132), (258, 258), (250, 256)], 30, 0, 0), line_w=2.4, sil=sil)
-    cel(img, P2(COWL_LOW, 20, 4, n=4), DARK, shade=DARK_SH,
-        shade_P=P2([(220, 160), (-180, 160), (-180, 60), (220, 60)], 20, 5, 0), rim=DARK_HI,
-        rim_dir=rim_dir, rim_w=3, line_w=3.0, sil=sil)
+    _wheel(img, P3, FW_C, spin, speed, 300, sil, boil, rim_dir, rotor=True)
+    cel(img, P2(FRAME, 28, 2, n=2), FRAME_C, shade=FRAME_SH,
+        shade_P=P2([(240, 330), (-140, 290), (-150, 120), (-200, 120), (-200, 340), (240, 340)], 28, 0, 0),
+        hi=WHITE * 0.9, hi_P=P2([(222, 352), (160, 344), (-40, 320), (-40, 316), (160, 340), (222, 348)], 28, 0, 0),
+        line_w=2.8, sil=sil)
+    cel(img, P2(CRANK, 36, 3, n=3), DARK, shade=DARK_SH,
+        shade_P=P2([(-160, 150), (180, 150), (180, 60), (-160, 60)], 36, 0, 0), rim=DARK_HI, rim_dir=rim_dir,
+        rim_w=3, line_w=3.0, sil=sil)
+    cyl = P2(CYL, 38, 4)
+    cel(img, cyl, DARK_HI * 0.9, shade=DARK, shade_P=P2([(110, 230), (200, 230), (200, 340), (150, 340)], 38, 0, 0),
+        line_w=2.6, sil=sil)
+    for f_ in (0.2, 0.38, 0.56, 0.74, 0.9):
+        a_ = lerp_pts(CYL[0], CYL[3], f_)
+        b_ = lerp_pts(CYL[1], CYL[2], f_)
+        ink(img, P2([a_, b_], 38, 70 + int(f_ * 10)), 2.2, INK, (0.05, 0.05))
+    # 클러치 커버 + 스펙큘러 틱
+    cel(img, P2(circ(-36, 168, 46, 24), 42, 5), DARK_HI * 0.85, shade=DARK,
+        shade_P=P2(circ(-20, 150, 46, 20), 42, 0, 0), line_w=2.4)
+    ink(img, P2([(-68, 186), (-58, 200), (-44, 206)], 43, 0, 0), 3.0, WHITE * 1.1, (0.3, 0.3))
+    ink(img, P2([(86, 116), (124, 136)], 40, 0, 0), 2.6, DARK_HI * 1.4, (0.3, 0.3))
+    # 엑조스트 헤더 (실린더 앞 → 엔진 아래 → 머플러)
+    hdr = smooth([(176, 300), (204, 236), (196, 150), (150, 92), (40, 76), (-90, 84), (-150, 120), (-168, 160)], 6, False)
+    ink(img, P2(hdr, 44, 6), 17, DARK_SH, (0.0, 0.0))
+    ink(img, P2(hdr + (0, 2), 45, 6), 12, hexc("#5b5f7a"), (0.0, 0.0))
+    ink(img, P2(hdr[6:-6] + (-2, 4), 46, 6), 3.0, WHITE * 0.95, (0.3, 0.3))
+    # 체인 + 스프로킷
+    cel(img, P2(circ(RW_C[0], RW_C[1], 56, 28), 46, 7), DARK_SH, line_w=2.2)
+    for kk in range(14):
+        a = spin + kk * 2 * np.pi / 14
+        tp = P2([(RW_C[0] + 58 * math.cos(a), RW_C[1] + 58 * math.sin(a))], 46, 0, 0)[0]
+        poly_fill(img, circ(tp[0], tp[1], 3.2, 8), DARK_HI)
+    cel(img, P2(circ(-112, 150, 24, 18), 46, 8), DARK_SH, line_w=2.0)
+    ink(img, P2([(-112, 175), (-290, 189)], 47, 9), 5.0, hexc("#3c3f52"), (0, 0))
+    ink(img, P2([(-112, 125), (-290, 75)], 47, 10), 5.0, hexc("#3c3f52"), (0, 0))
+    # 스윙암 (알루미늄 박스)
+    cel(img, P2(SWINGARM, 52, 11), FRAME_C, shade=FRAME_SH,
+        shade_P=P2([(-310, 128), (-150, 140), (-150, 100), (-310, 100)], 52, 0, 0),
+        hi=WHITE * 0.9, hi_P=P2([(-292, 146), (-170, 134), (-170, 131), (-292, 142)], 52, 0, 0),
+        rim=DARK_HI, rim_dir=rim_dir, rim_w=2.5, line_w=2.8, sil=sil)
+    cel(img, P2(circ(RW_C[0], RW_C[1], 14, 12), 54, 0, 0), DARK_HI, line_w=2.0)
+    cel(img, P2(circ(-150, 160, 13, 12), 54, 0, 0), DARK_HI, line_w=2.0)
+    # 리어 쇽 (스프링)
+    ink(img, P2([(-150, 290), (-200, 200)], 30, 12), 12, GOLD_SH, (0, 0))
+    for kk in range(5):
+        c_ = lerp_pts([(-156, 280)], [(-194, 210)], kk / 4.0)[0]
+        ink(img, P2([c_ + (-12, -4), c_ + (12, 4)], 31, 13 + kk), 3.2, GOLD, (0.1, 0.1))
+    # 앞 포크 (스탠천 크롬 + 아우터 튜브) + 펜더
+    fk_top, fk_mid, fk_bot = np.array([236.0, 372.0]), np.array([262.0, 262.0]), np.array([292.0, 140.0])
+    _limb_cel(img, P3, fk_top, fk_mid, 54, 54, 12, 12, 0, 1, hexc("#c8ccdc"), hexc("#7c8098"), 14, boil * 0.6, sil,
+              line_w=2.4, sh_off=(4, 0))
+    ink(img, P2([fk_top + (-5, -10), fk_mid + (-5, 6)], 55, 0, 0), 3.0, WHITE * 1.3, (0.2, 0.2))
+    _limb_cel(img, P3, fk_mid + (-3, 10), fk_bot, 54, 54, 17, 16, 0, 1, DARK, DARK_SH, 16, boil * 0.6, sil,
+              line_w=2.6, sh_off=(7, 0))
+    ink(img, P2([fk_mid + (-10, -6), fk_bot + (-10, 30)], 56, 0, 0), 2.6, DARK_HI * 1.5, (0.2, 0.3))
+    fen_o = [(FW_C[0] + 150 * math.cos(a), FW_C[1] + 150 * math.sin(a)) for a in np.linspace(0.55, 2.2, 12)]
+    fen_i = [(FW_C[0] + 138 * math.cos(a), FW_C[1] + 138 * math.sin(a)) for a in np.linspace(2.3, 0.45, 12)]
+    cel(img, P2(fen_o + fen_i, 46, 17), RED, shade=RED_SH,
+        shade_P=P2([(FW_C[0] + 143 * math.cos(a), FW_C[1] + 143 * math.sin(a)) for a in np.linspace(0.3, 2.4, 10)]
+                   + [(FW_C[0], FW_C[1])], 46, 0, 0), line_w=2.6, sil=sil)
     cel(img, P2(EXHAUST, 70, 6, n=3), DARK_HI * 0.8, shade=DARK,
         shade_P=P2([(-150, 165), (-390, 245), (-390, 150), (-150, 120)], 70, 0, 0),
         hi=WHITE * 0.85, hi_P=P2([(-176, 170), (-360, 244), (-362, 239), (-178, 164)], 70, 0, 0),
@@ -472,29 +643,37 @@ def bike_side(img, light, proj, pose=0.0, look=0.0, seed=0, spin=0.0, speed=1.0,
     poly_fill(img, tip, hexc("#ff7a30") * 1.6)
     poly_fill(light, tip, hexc("#ff6a20") * 1.2, mode="add")
 
-    # --- 메인 카울 (압출 솔리드)
-    fo = smooth(FAIRING, 4)
-    nf = len(fo)
-    tail_i0 = int(np.argmin(np.abs(fo[:, 0] + 452) + np.abs(fo[:, 1] - 400) * 0.5))
+    # --- 메인 카울 (압출 솔리드): 노즈 / 탱크 / 시트 카울
+    fo = smooth(BODY, 4)
 
     def special(i, nu, nv):
-        if nu < -0.6 and fo[i, 0] < -430 and 386 < fo[i, 1] < 414:
+        if nu < -0.6 and fo[i, 0] < -440 and 408 < fo[i, 1] < 436:
             return TAIL_HDR
         return None
 
     extrude(img, P3, fo, -62, 62, RED, RED_HI * 0.85, RED_SH * 0.7, RED_SH, seed=8, boil=boil,
-            shade=RED_SH, shade_uv=FAIR_SHADE, hi=RED_HI, hi_uv=FAIR_HI, rim=rim, rim_dir=rim_dir,
+            shade=RED_SH, shade_uv=BODY_SHADE, hi=RED_HI, hi_uv=BODY_HI, rim=rim, rim_dir=rim_dir,
             rim_w=4.5, line_w=4.8, inner_w=2.4, sil=sil, special=special)
-    # 테일 단면 램프 → 라이트 버퍼
-    ink(img, P2(STRIPE, 62, 11, n=4), 11, WHITE, (0.05, 0.25))
-    ink(img, P2([(p[0], p[1] - 14) for p in STRIPE[:6]], 62, 12, n=4), 3.0, INK, (0.1, 0.4))
-    ink(img, P2([(194, 210), (226, 300), (236, 378)], 62, 13, n=4), 2.2, INK, (0.2, 0.2))
-    ink(img, P2([(-205, 290), (-226, 336), (-236, 372)], 62, 14, n=4), 2.0, INK, (0.2, 0.2))
-    ink(img, P2([(-80, 132), (-56, 200), (-10, 250)], 62, 15, n=4), 1.8, INK, (0.3, 0.3))
-    cel(img, P2([(170, 266), (90, 272), (60, 256), (150, 250)], 62, 16), DARK_SH, line_w=2.0)
-    cel(img, P2([(160, 240), (100, 244), (84, 234), (150, 230)], 62, 17), DARK_SH, line_w=1.6)
-    # 일본어 데칼 (오리지널)
-    dq = P2([(-150, 320), (-20, 320), (-20, 282), (-150, 282)], 63, 0, 0)
+    # 리버리: 흰 스트라이프 + 검은 핀스트라이프 (노즈→페어링, 탱크, 테일)
+    for pts, s_, wd in (([(462, 314), (400, 338), (330, 356), (262, 370), (206, 382)], 11, 13),
+                        ([(176, 404), (120, 420), (60, 427), (0, 423), (-40, 410)], 12, 11),
+                        ([(-250, 392), (-330, 404), (-400, 418), (-446, 424)], 13, 12)):
+        ink(img, P2(pts, 62, s_, n=4), wd, WHITE, (0.04, 0.2))
+        ink(img, P2([(p[0], p[1] - wd * 1.05) for p in pts], 62, s_ + 20, n=4), 3.4, INK, (0.06, 0.3))
+    # 패널 라인 / 덕트 / 연료 캡
+    ink(img, P2([(205, 404), (190, 360), (168, 292)], 62, 14, n=4), 2.2, INK, (0.1, 0.1))
+    ink(img, P2([(-62, 410), (-90, 360), (-100, 318)], 62, 15, n=4), 2.0, INK, (0.1, 0.3))
+    ink(img, P2([(-214, 402), (-240, 360), (-242, 334)], 62, 16, n=4), 2.0, INK, (0.1, 0.3))
+    for kk in range(3):
+        du = kk * 30
+        cel(img, P2([(366 - du, 314), (346 - du, 314), (330 - du, 296), (350 - du, 296)], 62, 18 + kk, 0.5),
+            DARK_SH, line_w=1.6)
+    ink(img, P2([(60, 452), (88, 450)], 30, 0, 0), 5.0, DARK_HI, (0.1, 0.1))
+    # 스펙큘러 틱 (탱크 / 노즈 / 테일)
+    for pts in ([(120, 446), (100, 452)], [(60, 458), (46, 458)], [(440, 330), (428, 337)], [(-404, 444), (-420, 446)]):
+        ink(img, P2(pts, 62, 0, 0), 4.0, WHITE * 1.25, (0.3, 0.3))
+    # 오리지널 데칼 (프런트 사이드 패널)
+    dq = P2([(232, 352), (352, 336), (352, 300), (232, 316)], 63, 0, 0)
     _decal(img, *_decal_tex(), dq)
     tl = P2(TAIL_LAMP, 62, 18, 0.4)
     cel(img, tl, TAIL_HDR, line_w=2.0, light=light, light_col=TAIL_HDR * 0.9)
@@ -503,31 +682,36 @@ def bike_side(img, light, proj, pose=0.0, look=0.0, seed=0, spin=0.0, speed=1.0,
     poly_fill(light, sl, TAIL_HDR * 0.5, mode="add")
     hl = P2(HEAD_LAMP, 62, 20, 0.4)
     cel(img, hl, HEAD_HDR, line_w=1.8, light=light, light_col=HEAD_HDR * 0.8)
-    cel(img, P2(SCREEN, 40, 21, n=3), hexc("#1a2238"), hi=hexc("#9ff6ff") * 1.3,
-        hi_P=P2(SCREEN_HI, 40, 22, 0), line_w=2.8, alpha=0.93)
+    # 틴티드 윈드스크린 (반투명 스모크)
+    cel(img, P2(SCREEN, 40, 21, n=3), hexc("#22305a"), shade=hexc("#141a34"),
+        shade_P=P2([(330, 378), (205, 404), (205, 380), (330, 360)], 40, 0, 0),
+        hi=hexc("#9ff6ff") * 1.3, hi_P=P2(SCREEN_HI, 40, 22, 0), line_w=2.8, alpha=0.82)
     cel(img, P2(SEAT, 60, 23, n=3), hexc("#151320"), rim=DARK_HI, rim_dir=rim_dir, rim_w=3,
         line_w=2.6, sil=sil)
-    cel(img, P2(PEG, 110, 24), DARK_HI, line_w=2.0, sil=sil)
+    # 클립온 바
+    ink(img, P2([(232, 420), (210, 438), (196, 444)], 64, 25), 9.0, DARK_SH, (0.1, 0.1))
+    cel(img, P2(PEG, 96, 24), DARK_HI, line_w=2.0, sil=sil)
+    ink(img, P2([(-60, 216), (-110, 262), (-150, 286)], 94, 26), 8.0, DARK_HI * 0.9, (0.0, 0.2))
 
     # --- 라이더
-    torso = lerp_pts(TORSO[0], TORSO[1], k)
-    hx, hy, ht = lerp_pts(HELMET_C[0], HELMET_C[1], k)
-    leg = lerp_pts(LEG[0], LEG[1], k)
-    tsm = smooth(torso, 6)
-    sh_line = lerp_pts([(-260, 392), (-120, 402), (0, 425), (90, 445), (90, 300), (-260, 300)],
-                       [(-260, 392), (-130, 430), (-50, 500), (60, 560), (90, 300), (-260, 300)], k)
-    cel(img, P2(tsm, 0, 30), JACKET, shade=JACKET_SH, shade_P=P2(sh_line, 0, 31, 0.6),
-        hi=JACKET_HI * 0.8, hi_P=P2(lerp_pts([(-150, 446), (-60, 474), (20, 488), (-60, 466), (-150, 436)],
-                                             [(-196, 474), (-136, 532), (-70, 570), (-124, 520), (-186, 462)], k), 0, 0, 0),
-        rim=rim, rim_dir=rim_dir, rim_w=4.5, line_w=4.2, sil=sil)
-    # 재킷 디테일: 줄무늬, 밑단, 허리 주름, 지퍼선
-    ink(img, P2(lerp_pts([(-160, 440), (-80, 466), (-10, 481)], [(-190, 466), (-120, 522), (-50, 566)], k),
-                5, 32, n=3), 6.0, CYAN * 0.9, (0.2, 0.2))
-    ink(img, P2(lerp_pts([(-212, 414), (-182, 398), (-150, 386)], [(-222, 430), (-180, 410), (-138, 396)], k), 4, 33, n=3),
-        3.0, INK, (0.1, 0.1))
-    ink(img, P2(lerp_pts([(-120, 446), (-104, 430)], [(-150, 500), (-128, 488)], k), 4, 34), 2.0, INK, (0.3, 0.3))
-    ink(img, P2(lerp_pts([(-60, 458), (-44, 440)], [(-96, 540), (-76, 528)], k), 4, 35), 2.0, INK, (0.3, 0.3))
+    tor, tp, dh, nn = _torso_pts(hip, sh_)
+    tsm = smooth(tor, 5)
+    shade_t = [tp(-0.4, -0.05), tp(0.5, 0.05), tp(1.3, -0.08), tp(1.3, -1.4), tp(-0.4, -1.4)]
+    hi_t = [tp(0.10, 0.92), tp(0.30, 0.84), tp(0.52, 0.78), tp(0.78, 0.94), tp(0.90, 0.86),
+            tp(0.78, 0.80), tp(0.52, 0.66), tp(0.30, 0.70), tp(0.12, 0.76)]
+    cel(img, P2(tsm, 0, 30), JACKET, shade=JACKET_SH, shade_P=P2(shade_t, 0, 31, 0.6),
+        hi=JACKET_HI * 0.85, hi_P=P2(hi_t, 0, 0, 0), rim=rim, rim_dir=rim_dir, rim_w=4.5, line_w=4.4, sil=sil)
+    # 재킷 디테일: 사이드 스트라이프, 밑단 벨트, 허리/등 주름, 칼라
+    ink(img, P2([tp(a_, 0.16) for a_ in (0.14, 0.45, 0.75, 0.96)], 6, 32, n=3), 6.0, CYAN * 0.9, (0.15, 0.25))
+    ink(img, P2([tp(0.10, 0.98), tp(0.12, 0.2), tp(0.10, -0.9)], 6, 33, n=3), 3.0, INK, (0.05, 0.05))
+    for a_, l_ in ((0.40, 0.42), (0.50, 0.32), (0.62, 0.38)):
+        ink(img, P2([tp(a_, 0.86), tp(a_ + 0.05, 0.86 - l_ * 0.5), tp(a_ + 0.03, 0.86 - l_)], 6, 34 + int(a_ * 10)),
+            2.2, INK, (0.2, 0.35))
+    ink(img, P2([tp(0.30, -0.80), tp(0.36, -0.52), tp(0.33, -0.36)], 6, 37), 2.0, INK, (0.2, 0.4))
+    col_ = [tp(1.0, 0.62), tp(1.16, 0.46), tp(1.18, -0.30), tp(1.04, -0.46)]
+    cel(img, P2(col_, 8, 38, n=2), DARK, line_w=2.6)
     # 헬멧
+    hx, hy, ht = float(hd[0]), float(hd[1]), float(sk["tilt"])
     ca, sa = math.cos(ht), math.sin(ht)
 
     def hp(pts):
@@ -555,60 +739,55 @@ def bike_side(img, light, proj, pose=0.0, look=0.0, seed=0, spin=0.0, speed=1.0,
             pts = np.array([gc - d, gc, gc + d])
             ink(img, pts, 6 * glint, (3.0, 3.2, 3.6), (0.9, 0.9))
             ink(light, pts, 9 * glint, (2.0, 2.4, 3.0), (0.9, 0.9))
-    # 다리 (가까운 쪽): 허벅지(윗면 볼록), 정강이(종아리 볼록), 롱부츠
-    hip, knee, ank, toe = leg
-    thigh = limb(hip, knee, 46, 34, bulge=9, side=1 if knee[0] > hip[0] else -1)
-    cel(img, P2(thigh, 120, 42), PANTS, shade=JACKET_SH,
-        shade_P=P2(limb(hip + (6, -22), knee + (4, -20), 40, 28, 0), 120, 43, 0), rim=rim,
-        rim_dir=rim_dir, rim_w=3.5, line_w=3.8, sil=sil)
-    dsh = ank - knee
-    calf_side = -1 if dsh[1] < 0 and dsh[0] < 0 else 1
-    shin = limb(knee, ank, 33, 22, bulge=10, side=calf_side)
-    cel(img, P2(shin, 125, 44), PANTS, shade=JACKET_SH,
-        shade_P=P2(limb(knee + (12, -6), ank + (10, -4), 24, 16, 0), 125, 45, 0), line_w=3.4, sil=sil)
-    # 무릎 주름
+    # 다리 (가까운 쪽): 허벅지 / 정강이 / 부츠 — 정지 시 발을 바깥으로 짚음
+    lw0 = 104.0
+    lw1 = lerp(104.0, 150.0, k)
+    knee, ank = _ik(hip, ank0, L_THIGH, L_SHIN, 1)
+    toe = toe0 + (ank - ank0)
+    kw = (lw0 + lw1) * 0.5
+    _limb_cel(img, P3, hip, knee, lw0, kw, 46, 34, 9, 1, PANTS, JACKET_SH, 120, boil, sil, rim=rim,
+              rim_dir=rim_dir, line_w=3.8, sh_off=(4, -20))
+    _limb_cel(img, P3, knee, ank, kw, lw1, 33, 22, 10, -1, PANTS, JACKET_SH, 124, boil, sil, line_w=3.4,
+              sh_off=(10, -6))
     kd = (knee - hip) / (np.hypot(*(knee - hip)) + 1e-9)
     kn = np.array([-kd[1], kd[0]])
     for o in (0, 12):
-        a0 = knee - kd * (30 + o) - kn * 24
-        ink(img, P2([a0, a0 + kd * 12 + kn * 8, a0 + kd * 18 + kn * 20], 126, 46 + o), 2.0, INK, (0.3, 0.3))
-    # 부츠: 정강이 아래 40% + 발
+        a0 = knee - kd * (32 + o) - kn * 22
+        ink(img, P2([a0, a0 + kd * 12 + kn * 8, a0 + kd * 18 + kn * 20], kw + 2, 46 + o), 2.0, INK, (0.3, 0.3))
     d = toe - ank
     nrm = np.array([-d[1], d[0]]) / (np.hypot(*d) + 1e-9)
-    bt = knee + (ank - knee) * 0.5
+    bt = knee + (ank - knee) * 0.52
     sn = np.array([-(ank - knee)[1], (ank - knee)[0]]) / (np.hypot(*(ank - knee)) + 1e-9)
-    boot = [bt + sn * 27, bt - sn * 27, ank - nrm * 26 - d * 0.3, toe - nrm * 18 + d * 0.15,
-            toe + nrm * 16 + d * 0.22, ank + nrm * 34 + d * 0.2]
-    cel(img, P2(boot, 130, 48, n=2), BOOT,
+    boot = [bt + sn * 26, bt - sn * 26, ank - nrm * 24 - d * 0.3, toe - nrm * 16 + d * 0.15,
+            toe + nrm * 15 + d * 0.22, ank + nrm * 32 + d * 0.2]
+    cel(img, P2(boot, lw1 + 6, 48, n=2), BOOT,
         hi=RED, hi_P=P2([bt + sn * 30 + (ank - knee) * 0.12, bt - sn * 30 + (ank - knee) * 0.12,
-                         bt - sn * 30 + (ank - knee) * 0.22, bt + sn * 30 + (ank - knee) * 0.22], 130, 0, 0),
+                         bt - sn * 30 + (ank - knee) * 0.22, bt + sn * 30 + (ank - knee) * 0.22], lw1 + 6, 0, 0),
         rim=DARK_HI, rim_dir=rim_dir, rim_w=3, line_w=3.4, sil=sil)
-    # 팔 (가까운 쪽): 어깨 아머, 상완, 전완, 장갑
-    sh_, el, wr = arm
-    cel(img, P2(limb(sh_, el, 33, 25, bulge=7, side=-1), 135, 50), JACKET, shade=JACKET_SH,
-        shade_P=P2(limb(sh_ + (8, -16), el + (8, -14), 26, 18, 0), 135, 51, 0), rim=rim,
-        rim_dir=rim_dir, rim_w=4, line_w=3.8, sil=sil)
-    cel(img, P2(limb(el, wr, 25, 19, bulge=6, side=1), 135, 52), JACKET, shade=JACKET_SH,
-        shade_P=P2(limb(el + (4, -12), wr + (4, -10), 19, 13, 0), 135, 53, 0), line_w=3.4, sil=sil)
+    # 팔 (가까운 쪽): 상완 / 전완 / 어깨 패치 / 장갑
+    _limb_cel(img, P3, sh_, el, 70, 84, 31, 24, 7, -1, JACKET, JACKET_SH, 135, boil, sil, rim=rim,
+              rim_dir=rim_dir, line_w=3.8, sh_off=(8, -16))
+    _limb_cel(img, P3, el, wr, 84, 92, 24, 19, 6, 1, JACKET, JACKET_SH, 137, boil, sil, line_w=3.4,
+              sh_off=(4, -12))
     ed = (wr - el) / (np.hypot(*(wr - el)) + 1e-9)
     en = np.array([-ed[1], ed[0]])
-    ink(img, P2([el + ed * 10 - en * 20, el + ed * 22 - en * 12], 136, 54), 2.0, INK, (0.3, 0.3))
-    ink(img, P2([el + ed * 20 - en * 22, el + ed * 32 - en * 14], 136, 55), 2.0, INK, (0.3, 0.3))
+    ink(img, P2([el + ed * 10 - en * 20, el + ed * 22 - en * 12], 94, 54), 2.0, INK, (0.3, 0.3))
+    ink(img, P2([el + ed * 20 - en * 22, el + ed * 32 - en * 14], 94, 55), 2.0, INK, (0.3, 0.3))
     ad = (el - sh_) / (np.hypot(*(el - sh_)) + 1e-9)
     an = np.array([-ad[1], ad[0]])
-    pc = sh_ + ad * 22
-    pad = [pc - ad * 20 + an * 22, pc + ad * 24 + an * 26, pc + ad * 34, pc + ad * 22 - an * 26,
-           pc - ad * 20 - an * 20, pc - ad * 28]
-    cel(img, P2(pad, 137, 56, n=3), RED, shade=RED_SH, shade_P=P2([pc, pc + ad * 50 - an * 50, pc - ad * 50 - an * 50], 137, 0, 0),
-        hi=RED_HI, hi_P=P2([pc - ad * 14 + an * 16, pc + ad * 14 + an * 19, pc + ad * 7 + an * 11, pc - ad * 12 + an * 10], 137, 0, 0),
-        rim=rim, rim_dir=rim_dir, rim_w=3.5, line_w=3.4, sil=sil)
-    cuff = [wr - ed * 26 + en * 24, wr - ed * 26 - en * 24, wr - ed * 6 - en * 22, wr - ed * 6 + en * 22]
-    cel(img, P2(cuff, 139, 57), DARK, line_w=2.6, sil=sil)
-    glove = [wr - ed * 8 + en * 21, wr + ed * 22 + en * 22, wr + ed * 38 + en * 6, wr + ed * 34 - en * 18,
-             wr - ed * 8 - en * 20]
-    cel(img, P2(glove, 140, 58, n=2), BOOT, hi=DARK_HI, hi_P=P2([wr + ed * 4 + en * 18, wr + ed * 26 + en * 18, wr + ed * 24 + en * 10, wr + ed * 4 + en * 10], 140, 0, 0),
+    pc = sh_ + ad * 20
+    pad = smooth([pc - ad * 22 + an * 18, pc + ad * 10 + an * 28, pc + ad * 32 + an * 10, pc + ad * 26 - an * 22,
+                  pc - ad * 10 - an * 24, pc - ad * 30 - an * 2], 4)
+    cel(img, P2(pad, 88, 56, 0.6), RED, shade=RED_SH, shade_P=P2([pc, pc + ad * 50 - an * 50, pc - ad * 50 - an * 50], 88, 0, 0),
+        hi=RED_HI, hi_P=P2([pc - ad * 14 + an * 14, pc + ad * 12 + an * 20, pc + ad * 6 + an * 12, pc - ad * 12 + an * 8], 88, 0, 0),
+        rim=rim, rim_dir=rim_dir, rim_w=3.5, line_w=3.2, sil=sil)
+    cuff = [wr - ed * 26 + en * 23, wr - ed * 26 - en * 23, wr - ed * 6 - en * 21, wr - ed * 6 + en * 21]
+    cel(img, P2(cuff, 96, 57), DARK, line_w=2.6, sil=sil)
+    glove = [wr - ed * 8 + en * 20, wr + ed * 20 + en * 21, wr + ed * 36 + en * 6, wr + ed * 32 - en * 17,
+             wr - ed * 8 - en * 19]
+    cel(img, P2(glove, 98, 58, n=2), BOOT, hi=DARK_HI, hi_P=P2([wr + ed * 4 + en * 17, wr + ed * 24 + en * 17, wr + ed * 22 + en * 9, wr + ed * 4 + en * 9], 98, 0, 0),
         rim=DARK_HI, rim_dir=rim_dir, rim_w=3, line_w=3.0, sil=sil)
-    return P2([(-452, 400)], 62, 0, 0)[0]
+    return P2([TAIL_UV], 62, 0, 0)[0]
 
 
 # ---------------------------------------------------------------------------
@@ -627,8 +806,9 @@ RV_HUG = [(-46, 150), (46, 150), (54, 197), (-54, 197)]
 RV_TAIL = [(-58, 188), (-92, 212), (-104, 252), (-92, 284), (-56, 300), (56, 300), (92, 284),
           (104, 252), (92, 212), (58, 188)]
 RV_LAMP = [(-91, 236), (91, 236), (87, 257), (-87, 257)]
-RV_TORSO = [(-60, 318), (-90, 352), (-104, 392), (-96, 420), (-70, 438), (-34, 449), (0, 452),
-            (34, 449), (70, 438), (96, 420), (104, 392), (90, 352), (60, 318)]
+RV_TORSO = [(-58, 318), (-74, 342), (-94, 374), (-110, 404), (-110, 426), (-94, 444), (-60, 453),
+            (-26, 457), (0, 458), (26, 457), (60, 453), (94, 444), (110, 426), (110, 404), (94, 374),
+            (74, 342), (58, 318)]
 RV_SCREEN = [(-68, 452), (-50, 494), (50, 494), (68, 452)]
 
 
@@ -730,16 +910,22 @@ def bike_rear(img, light, X, sil=None, seed=0, boil=1.1, pursuer=0.0, spin=0.0):
         hi=mix(JACKET, JACKET_HI, 0.4 + 0.5 * hiw), hi_P=T([(-118, 392), (-100, 360), (-70, 330), (-84, 372), (-96, 420)], 102, 0.5),
         rim=rimc, rim_dir=rd, rim_w=4.5, line_w=4.2, sil=sil)
     ink(img, T([(-92, 416), (-46, 430), (0, 434), (46, 430), (92, 416)], 103, n=3), 7, CYAN * 0.95, (0.15, 0.15))
+    # 둥근 어깨(가죽 재킷) + 하이라이트
     for sgn, s0 in ((1, 120), (-1, 125)):
-        pad = [(sgn * 70, 432), (sgn * 104, 440), (sgn * 124, 420), (sgn * 120, 392), (sgn * 96, 384), (sgn * 76, 404)]
-        cel(img, T(pad, s0, n=2), RED, shade=RED_SH,
-            shade_P=T([(sgn * 100, 380), (sgn * 140, 380), (sgn * 140, 446), (sgn * 108, 420)], s0 + 1, 0),
-            hi=mix(RED_HI, warm, 0.3 * hiw) if sgn < 0 else RED_HI * 0.9,
-            hi_P=T([(sgn * 78, 428), (sgn * 102, 436), (sgn * 108, 428), (sgn * 84, 420)], s0 + 2, 0),
-            rim=rimc if sgn > 0 else None, rim_dir=rd, rim_w=3.5, line_w=3.2, sil=sil)
-    ink(img, T([(0, 330), (2, 380), (0, 425)], 104, n=3), 2.2, INK, (0.3, 0.3))
-    ink(img, T([(-60, 345), (-40, 352)], 105), 2.0, INK, (0.3, 0.3))
-    ink(img, T([(56, 350), (36, 356)], 106), 2.0, INK, (0.3, 0.3))
+        cap = ellip(sgn * 92, 424, 30, 24, -0.35 * sgn, 24)
+        cel(img, T(cap, s0, 0.8), JACKET, shade=JACKET_SH,
+            shade_P=T([(sgn * 96, 400), (sgn * 140, 400), (sgn * 140, 450), (sgn * 104, 436)], s0 + 1, 0),
+            hi=mix(JACKET_HI, warm, 0.3 * hiw), hi_P=T(ellip(sgn * 86 - 4 * sgn, 438, 16, 6, -0.3 * sgn, 12), s0 + 2, 0),
+            rim=rimc if sgn > 0 else None, rim_dir=rd, rim_w=3.5, line_w=3.0, sil=sil)
+    # 등 엠블럼 (오리지널: 붉은 원 + 흰 번개 쐐기)
+    cel(img, T(ellip(0, 392, 30, 28, 0, 32), 107, 0.5), RED, shade=RED_SH,
+        shade_P=T([(4, 360), (40, 360), (40, 420), (16, 400)], 0, 0), line_w=2.6, sil=sil)
+    bolt = [(-6, 414), (14, 400), (2, 394), (16, 372), (-10, 388), (2, 394), (-14, 404)]
+    poly_fill(img, T(bolt, 108, 0.4), WHITE)
+    # 재킷 주름 (허리 / 겨드랑이)
+    for sgn, s0 in ((1, 130), (-1, 133)):
+        ink(img, T([(sgn * 30, 334), (sgn * 52, 346), (sgn * 70, 344)], s0, n=3), 2.0, INK, (0.3, 0.3))
+        ink(img, T([(sgn * 72, 380), (sgn * 82, 362), (sgn * 76, 346)], s0 + 1, n=3), 2.0, INK, (0.3, 0.3))
     # 헬멧
     cel(img, T(ellip(0, 458, 58, 52, 0, 36), 110), HELM, shade=HELM_SH,
         shade_P=T(ellip(26, 440, 56, 50, 0, 28), 111, 0.5),
@@ -747,6 +933,10 @@ def bike_rear(img, light, X, sil=None, seed=0, boil=1.1, pursuer=0.0, spin=0.0):
         rim=rimc, rim_dir=rd, rim_w=5, line_w=4.2, sil=sil)
     for xo in (-9, 9):
         ink(img, T([(xo * 0.6, 508), (xo, 470), (xo * 0.8, 418)], 113 + xo, n=3), 5, RED * 1.1, (0.08, 0.08))
+    # 바이저 가장자리 반짝임 (옆으로 살짝 보임)
+    vg = T([(50, 476), (57, 458), (55, 440)], 0, 0)
+    ink(img, vg, 4.0, hexc("#a8f8ff") * 1.6, (0.3, 0.3))
+    ink(light, vg, 6.0, hexc("#a8f8ff") * 0.8, (0.3, 0.3))
     return T([(0, 247)], 0, 0)[0]
 
 
@@ -1563,18 +1753,21 @@ def _trails_A(img, light, ctx, cam):
     Zs = ZBK - TRAIL_V * taus
     ok = Zs > 0.45
     taus, Zs = taus[ok], Zs[ok]
-    for off in (-0.2, 0.2):
-        Xs = np.array([_xb(t - tau) for tau in taus]) + off
-        lean = np.array([_lean_A(t - tau) for tau in taus])
-        Ys = 0.66 + 0.0 * lean
-        Xs = Xs + np.sin(lean) * 0.66 * 0.6
+    # 잔상 궤적: 위빙의 저주파 성분만 따라가는 완만한 호 (뱀처럼 꼬이지 않게), 램프에서 가장 굵고 뜨겁다
+    xlow = lambda tt: 0.95 * math.sin(2 * math.pi * 0.62 * tt + 0.25)
+    age = taus / max(taus[-1], 1e-6)
+    lean0 = _lean_A(t)
+    wd0 = min(FA * 0.05 / ZBK, 46.0) * 1.35
+    for off in (-0.24, 0.24):
+        Xs = _xb(t) + off + np.array([xlow(t - tau) - xlow(t) for tau in taus]) * 0.55
+        Xs = Xs + math.sin(lean0) * 0.66 * 0.6 * (1 - age)
+        Ys = np.full(len(taus), 0.66)
         P = cam.p(Xs, Ys, Zs)
-        P = _smooth_path(P, 3)
-        age = taus / T
-        wd = np.minimum(FA * 0.05 / Zs, 46.0)
-        al = (1 - age) ** 1.6
-        _ribbon(m_core, P, np.maximum(wd * 0.2, 2.0), al)
-        _ribbon(m_wide, P, wd * 1.2, al * 0.32)
+        P = _smooth_path(P, 6)
+        wd = wd0 * (1 - 0.6 * age)
+        al = (1 - age) ** 1.25
+        _ribbon(m_core, P, np.maximum(wd * 0.3, 1.5), al)
+        _ribbon(m_wide, P, wd * 1.8, al * 0.38)
     img += m_wide[..., None] * TAIL_HDR * 0.45
     img += m_core[..., None] * TRAIL_CORE * 0.85
     light += m_wide[..., None] * TAIL_HDR * 0.9 + m_core[..., None] * TAIL_HDR * 0.6
@@ -1683,6 +1876,12 @@ def _pose_B(lf):
     return yaw, lean, pose, look, pitch
 
 
+def _slide_B(lf):
+    """라이더 슬라이드 자세(체중 이동 + 안쪽 다리 뻗기) 0..1."""
+    f = float(lf)
+    return ease_out(remap(f, 40, 44), 2.0) * (1.0 - ease_in_out(remap(f, 53, 58)))
+
+
 def _bike_xform(u, v, w, yaw, lean, pitch):
     """로컬(m) → 바이크 기준 월드 오프셋 (dX, Y, dZ_toward_cam). pitch>0 = 뒤가 들림(앞바퀴 접지점 기준)."""
     fu = 290 * SU
@@ -1718,7 +1917,7 @@ def _lamp_world_B(tau, dv=0.0):
     """테일램프 월드 좌표."""
     lf = tau * 24 + CUT
     yaw, lean, _, _, pitch = _pose_B(lf)
-    u2, v1, w2 = _bike_xform(-452 * SU, (400 + dv) * SU, 0.0, yaw, lean, pitch)
+    u2, v1, w2 = _bike_xform(TAIL_UV[0] * SU, (TAIL_UV[1] + dv) * SU, 0.0, yaw, lean, pitch)
     return _XbB(tau) + u2, v1, ZBB - w2
 
 
@@ -2150,6 +2349,7 @@ def render_B(ctx: Ctx) -> np.ndarray:
     # 스키드 마크 (월드 고정, 검은 타이어 자국 + 뜨거운 긁힘)
     _skid_B(img, light, tau, Xc, shake)
     yaw, lean, pose, look, pitch = _pose_B(ctx.drawing() * 2) if lf >= 40 else _pose_B(lf)
+    slide = _slide_B(ctx.drawing() * 2) if lf >= 40 else 0.0
     proj = _proj_B(Xb, Xc, yaw, lean, pitch, shake)
     # 바이크 밑 그림자 + 붉은 노면 반사
     cpts = proj(np.array([[-290, 0, 0], [290, 0, 0]], np.float64))
@@ -2175,7 +2375,9 @@ def render_B(ctx: Ctx) -> np.ndarray:
     tmp = img.copy()
     spin = Xb / (R_TYRE * SU)
     bike_side(tmp, lb, proj, pose=pose, look=look, seed=ctx.drawing(), spin=spin,
-              speed=min(1.0, v / 12.0), sil=sil, glint=_glint(lf))
+              speed=min(1.0, v / 12.0), sil=sil, glint=_glint(lf), slide=slide, lean=lean)
+    # 실루엣 밖으로 나간 선/반투명 셀(윈드스크린·클립온·헤더 등)도 합성에 포함
+    np.maximum(sil, (np.abs(tmp - img).max(axis=2) > 2e-3).astype(np.float32), out=sil)
     ghost_k = 1.0 - smoothstep(40, 47, lf)
     _ghosts_B(img, light, sil, ghost_k, seed=ctx.drawing())
     img = img * (1 - sil[..., None]) + tmp * sil[..., None]
@@ -2240,6 +2442,5 @@ def _skid_B(img, light, tau, Xc, shake):
 
 
 def render(ctx: Ctx) -> np.ndarray:
-    if ctx.lframe < CUT:
-        return render_A(ctx)
-    return render_B(ctx)
+    img = render_A(ctx) if ctx.lframe < CUT else render_B(ctx)
+    return np.asarray(img, np.float32)

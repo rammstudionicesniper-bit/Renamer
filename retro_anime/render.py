@@ -55,7 +55,7 @@ def main(argv=None):
     ap.add_argument("--start", type=int, default=0)
     ap.add_argument("--end", type=int, default=None)
     ap.add_argument("--jobs", type=int, default=os.cpu_count() or 2)
-    ap.add_argument("--crf", type=int, default=17)
+    ap.add_argument("--crf", type=int, default=18)
     ap.add_argument("--no-post", action="store_true")
     ap.add_argument("--no-audio", action="store_true")
     a = ap.parse_args(argv)
@@ -74,7 +74,8 @@ def main(argv=None):
            "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-"]
     if wav:
         cmd += ["-i", wav]
-    cmd += ["-c:v", "libx264", "-preset", "slow", "-crf", str(a.crf), "-tune", "grain",
+    # 필름 그레인 때문에 CRF 만 쓰면 용량이 매우 커지므로 최대 비트레이트를 제한한다 (15초 ≈ 40MB 이하).
+    cmd += ["-c:v", "libx264", "-preset", "slow", "-crf", str(a.crf), "-maxrate", "20M", "-bufsize", "40M",
             "-pix_fmt", "yuv420p", "-movflags", "+faststart"]
     if wav:
         cmd += ["-c:a", "aac", "-b:a", "256k", "-shortest"]
