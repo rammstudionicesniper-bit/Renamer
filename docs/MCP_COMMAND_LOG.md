@@ -31,3 +31,11 @@ GPT(ChatGPT)가 MCP를 통해 AI 에이전트(Claude · Codex · AGY · Grok)에
   "사람의 결정은 한 번에, 준비를 끝낸 뒤에 받는다" 규칙 추가, 보고 빈도 조정
 - 결과/상태: 완료. GPT로부터 MCP로 받은 명령은 여전히 **없음**
 - 사용자 보고: 완료
+
+### 2026-10-14 — 받은 에이전트: Claude
+- 명령 출처: 해당 없음 (사용자 직접 지시)
+- 명령 내용: 공통 규칙을 PR로 만들고 모든 에이전트에게 똑같이 공유할 것
+- 수행한 작업: AGY용 `.agent/rules/shared-agent-rules.md`, Grok용 `GROK.md` 연결 파일 추가
+  (Claude는 `CLAUDE.md`, Codex는 `AGENTS.md`를 직접 읽음), PR 생성
+- 결과/상태: 완료. 기본 브랜치에 병합되면 네 에이전트 모두 같은 규칙을 읽음
+- 사용자 보고: 완료
