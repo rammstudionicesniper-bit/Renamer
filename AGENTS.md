@@ -1,6 +1,6 @@
-# AI 에이전트 공통 규칙 (Claude · AGY · Grok 공용)
+# AI 에이전트 공통 규칙 (Claude · Codex · AGY · Grok 공용)
 
-이 저장소에서 작업하는 모든 AI 에이전트(Claude Code, AGY, Grok 등)는 아래 규칙을 따릅니다.
+이 저장소에서 작업하는 모든 AI 에이전트(Claude Code, Codex, AGY, Grok 등)는 아래 규칙을 따릅니다.
 
 ## MCP 명령 공유 규칙
 
@@ -10,7 +10,7 @@ GPT(ChatGPT)로부터 **MCP를 통해 명령을 받은 경우**:
    받은 명령 원문(또는 요약)을 보여준다.
 2. **계속 보고한다.** — 그 명령으로 무엇을 했는지, 진행 상황과 결과를 사용자에게 보고한다.
 3. **공유 로그에 기록한다.** — [`docs/MCP_COMMAND_LOG.md`](docs/MCP_COMMAND_LOG.md)에
-   항목을 추가해, 다른 에이전트(Claude · AGY · Grok)도 GPT가 무엇을 지시했는지 볼 수 있게 한다.
+   항목을 추가해, 다른 에이전트(Claude · Codex · AGY · Grok)도 GPT가 무엇을 지시했는지 볼 수 있게 한다.
 4. **작업을 시작하기 전에 로그를 읽는다.** — 다른 에이전트가 받은 GPT 명령을 확인하고 중복·충돌을 피한다.
 
 ### 주의

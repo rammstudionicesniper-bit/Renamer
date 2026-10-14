@@ -1,12 +1,12 @@
 # MCP 명령 공유 로그
 
-GPT(ChatGPT)가 MCP를 통해 AI 에이전트(Claude · AGY · Grok)에게 내린 명령을 기록하는 공유 로그입니다.
+GPT(ChatGPT)가 MCP를 통해 AI 에이전트(Claude · Codex · AGY · Grok)에게 내린 명령을 기록하는 공유 로그입니다.
 규칙은 [AGENTS.md](../AGENTS.md) 참고. **새 항목은 맨 아래에 추가**합니다.
 
 ## 기록 형식
 
 ```
-### YYYY-MM-DD HH:MM (KST) — 받은 에이전트: Claude / AGY / Grok
+### YYYY-MM-DD HH:MM (KST) — 받은 에이전트: Claude / Codex / AGY / Grok
 - 명령 출처: GPT (MCP)
 - 명령 내용: (원문 또는 요약)
 - 수행한 작업: (무엇을 했는지)
